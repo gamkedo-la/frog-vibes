@@ -1,0 +1,8 @@
+# Ignore Temp Files       
+*.*~
+.DS_Store
+*.swp
+.vscode/launch.json
+js/.DS_Store
+images/.DS_Store
+.idea/*
