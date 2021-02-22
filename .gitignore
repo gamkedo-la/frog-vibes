@@ -6,3 +6,16 @@
 js/.DS_Store
 images/.DS_Store
 .idea/*
+
+# dependencies
+node_modules
+
+# production
+build
+
+npm-debug.log
+yarn-error.log
+yarn.lock
+.yarnclean
+.vscode
+.idea
