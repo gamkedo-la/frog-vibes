@@ -41,8 +41,14 @@ function colorLine(startX, startY, endX, endY, color) {
 	ctx.lineTo(endX, endY);
 	ctx.stroke();
 }
-const drawImage = ctx.drawImage;
+const drawImage = (fn, startX, startY) => {
+  ctx.drawImage(fn, startX, startY);
+};
+const clear = () => { 
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+};
 const graphics = {
+	clear,
 	drawImage,
 	drawEvent,
     drawBitmapCenteredWithRotation,
@@ -51,7 +57,5 @@ const graphics = {
     colorText,
     colorLine
 };
-export const startDrawing = () => {
-
-};
+export const event = drawEvents;
 export default graphics;

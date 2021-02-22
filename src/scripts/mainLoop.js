@@ -1,6 +1,6 @@
 import EventChannel from "./EventChannel";
 var started = false;
-
+import graphics, {event}  from "./graphicscommon";
 
 export const events = new EventChannel();
 
@@ -16,11 +16,13 @@ export const Pause = () => {
 
 function update(progress) {
   // Update the state of the world for the elapsed time since last render
-  events.emit("update", { detail: progress });
+  events.emit("Update", { detail: progress });
 }
 
 function draw() {
   // Draw the state of the world
+  graphics.clear();
+  event.emit("Draw");
 }
 
 function loop(timestamp) {

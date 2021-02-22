@@ -7,7 +7,7 @@ import { Start as StartMainLoop, Pause } from "./mainLoop";
 if (process.env.NODE_ENV === "development") {
   require("../index.html");
 }
-graphics.colorRect(0, 30, 30, 30, "red");
+// graphics.colorRect(0, 30, 30, 30, "red");
 console.log("webpack starterkit");
 
 
