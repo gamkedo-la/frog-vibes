@@ -1,6 +1,6 @@
 import EventChannel from "./EventChannel";
 var started = false;
-import graphics, {event}  from "./graphicscommon";
+import graphics, {graphicsEvent}  from "./graphicscommon";
 
 export const events = new EventChannel();
 
@@ -22,7 +22,7 @@ function update(progress) {
 function draw() {
   // Draw the state of the world
   graphics.clear();
-  event.emit("Draw");
+  graphicsEvent.emit("Draw");
 }
 
 function loop(timestamp) {
