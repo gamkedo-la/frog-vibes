@@ -1,3 +1,5 @@
+import graphics from "./graphicscommon";
+
 // class for animations
 function spriteClass() {
 	var spriteSheet;
@@ -27,7 +29,7 @@ function spriteClass() {
 						newTotal, newSpeed,
 						loop) {
 		if(!newSpriteSheet){
-			throw "YO, what are you doing. Missing spriiiiiiite";
+			throw "Missing spriiiiiiite";
 		}
 		hasFinishedLoop = false;
 		spriteSheet = newSpriteSheet;
