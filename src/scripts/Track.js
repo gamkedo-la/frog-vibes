@@ -1,5 +1,5 @@
 import BeatMachine from "./BeatMachine";
-import { events } from "./mainLoop";
+import { updateEvent } from "./mainLoop";
 const beatMachine = new BeatMachine();
 class Track {
   track = [];
@@ -11,7 +11,7 @@ class Track {
     // //TODO: reverse & validate
     this.track = [...trackList];
     this.fullTrack = [...trackList];
-    events.on("update", this.Update);
+    updateEvent.on("Update", this.Update);
   }
   Update = ()=> {
     if (this.track[0] + this.marginOfError < beatMachine.GetBeat()) {

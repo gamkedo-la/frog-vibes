@@ -1,37 +1,51 @@
-import graphics from "./graphicscommon";
+import graphics, { addDraw } from "./graphicscommon";
+import { addUpdate } from "./mainLoop";
 
 // class for animations
-function spriteClass() {
-  var spriteSheet;
-  var frameX;
-  var frameY;
-  var frameWidth;
-  var frameHeight;
-  var frameTotal;
-  var frameIndex;
-  var loopFrames;
-  var drawFrame;
-  var currentTime;
-  var timePerFrame;
-  var secretCanvas = undefined;
-  var getImgData = undefined;
-  var hasThrown = undefined;
-  var tintThisFrame = false;
-  var playerSpriteWidth = 14;
-  var playerSpriteHeight = 26;
-  var playerSpriteCanvasX = 9;
-  var playerSpriteCanvasY = 3;
-  var hasFinishedLoop = false;
+export default class spriteClass {
+  spriteSheet = document.createElement("img");
+  x = 0;
+  y = 0;
+  frameX;
+  frameY;
+  frameWidth;
+  frameHeight;
+  columns;
+  rows;
+  frameTotal;
+  frameIndex;
+  loopFrames;
+  drawFrame;
+  currentTime;
+  timePerFrame = 416.66; //(15 / 60) * 1000; // 15 frames every 60 seconds but in miliseconds
+  secretCanvas = undefined;
+  getImgData = undefined;
 
+  hasFinishedLoop = false;
+
+  constructor(path, col, row) {
+    this.spriteSheet.onload = this.onLoad;
+    this.addImage(path, col, row);
+    this.drawFrame = false;
+    addDraw(this.draw);
+    addUpdate(this.update);
+  }
+  addImage(path, col, row) {
+    // TODO: make a dictonary of added images, or some way to quicky switch between animations
+    this.columns = col;
+    this.rows = row;
+    this.spriteSheet.src = path;
+  }
+  onLoad = () => {
+    this.frameWidth = this.spriteSheet.naturalWidth / this.columns;
+    this.frameHeight = this.spriteSheet.naturalHeight / this.rows;
+    this.frameTotal = this.columns * this.rows;
+    this.loopFrames = true;
+    this.reset();
+    this.frameIndex = 1;
+  };
   // set sprite sheet to draw from and defines animation speed
-  this.setSprite = function (
-    newSpriteSheet,
-    newWidth,
-    newHeight,
-    newTotal,
-    newSpeed,
-    loop
-  ) {
+  setSprite(newSpriteSheet, newWidth, newHeight, newTotal, newSpeed, loop) {
     if (!newSpriteSheet) {
       throw "Missing spriiiiiiite";
     }
@@ -48,79 +62,70 @@ function spriteClass() {
       timePerFrame = 0;
     }
     loopFrames = loop;
-    drawFrame = true;
     this.reset();
-  };
+  }
 
   // sets a still frame from a sprite sheet, index goes left to right, top to bottom
-  this.setFrame = function (index) {
+  setFrame(index) {
     result = calculateFrameIndex(index);
     frameX = result.x;
     frameY = result.y;
     frameIndex = index % frameTotal;
     timePerFrame = 0;
     drawFrame = true;
-  };
+  }
 
-  this.getSpriteSheet = function () {
+  getSpriteSheet() {
     return spriteSheet;
-  };
-
-  this.getFrame = function () {
-    return frameIndex;
-  };
-
-  this.isDone = function () {
-    return hasFinishedLoop;
-  };
-
-  this.setSpeed = function (newSpeed) {
+  }
+  setSpeed(newSpeed) {
     if (newSpeed > 0) {
       timePerFrame = 1 / newSpeed;
     } else {
       timePerFrame = 0;
     }
-  };
+  }
 
-  this.reset = function () {
-    currentTime = 0;
-    frameIndex = 0;
-    frameX = 0;
-    frameY = 0;
-  };
-
+  reset() {
+    this.currentTime = 0;
+    this.frameIndex = 0;
+    this.frameX = 0;
+    this.frameY = 0;
+    this.hasFinishedLoop = false;
+    this.drawFrame = true;
+  }
   // draws current sprite frame
-  this.draw = function (x, y) {
-    var leftEdge = Math.floor(x - frameWidth / 2);
-    var topEdge = Math.floor(y - frameHeight / 2);
-
-    if (drawFrame) {
+  draw = () => {
+    if (this.drawFrame) {
       // this version of drawImage is needed to point to different frames in sprite sheet
-      graphics.drawImage(
-        spriteSheet,
-        frameX,
-        frameY,
-        frameWidth,
-        frameHeight,
-        leftEdge,
-        topEdge,
-        frameWidth,
-        frameHeight
+      console.log(this.frameIndex);
+      graphics.drawFrame(
+        this.spriteSheet,
+        this.frameX,
+        this.frameY,
+        this.frameWidth,
+        this.frameHeight,
+        this.x,
+        this.y,
+        this.frameWidth,
+        this.frameHeight
       );
+    } else {
+      console.log("no draww");
     }
   };
 
   // cycles through sprite animations
-  this.update = function () {
-    if (frameTotal > 0 && timePerFrame > 0) {
-      currentTime += TIME_PER_TICK;
+  update = (e) => {
+    if (this.frameTotal > 0 && this.timePerFrame > 0) {
+      this.currentTime += e.detail;
 
-      if (currentTime >= timePerFrame) {
-        currentTime -= timePerFrame;
+      if (this.currentTime >= this.timePerFrame) {
+        this.currentTime -= this.timePerFrame;
 
-        if (frameIndex + 1 >= frameTotal) {
-          hasFinishedLoop = true;
-          if (loopFrames) {
+        if (this.frameIndex + 1 >= this.frameTotal) {
+          this.hasFinishedLoop = true;
+          if (this.loopFrames) {
             this.reset();
             return;
           } else {
@@ -129,29 +134,32 @@ function spriteClass() {
             return;
           }
         }
-        frameIndex++;
+        this.frameIndex++;
 
-        frameX += frameWidth;
+        this.frameX += this.frameWidth;
 
-        if (frameX >= spriteSheet.width) {
-          frameX = 0;
-          frameY += frameHeight;
+        if (this.frameX >= this.spriteSheet.width) {
+          this.frameX = 0;
+          this.frameY += frameHeight;
 
-          if (frameY >= spriteSheet.height) {
-            frameY = 0;
-            frameIndex = 0;
+          if (this.frameY >= this.spriteSheet.height) {
+            this.frameY = 0;
+            this.frameIndex = 0;
           }
         }
       }
+    } else {
+      console.log(this.frameTotal + " " + this.timePerFrame);
     }
   };
 
   // helper function for setting still frames
-  function calculateFrameIndex(index) {
-    var posX = (index * frameWidth) % spriteSheet.width;
+  calculateFrameIndex(index) {
+    var posX = (index * this.frameWidth) % this.spriteSheet.width;
     var posY =
-      (Math.floor(index / (spriteSheet.width / frameWidth)) * frameHeight) %
-      spriteSheet.height;
+      (Math.floor(index / (this.spriteSheet.width / this.frameWidth)) *
+        this.frameHeight) %
+      this.spriteSheet.height;
     return {
       x: posX,
       y: posY,

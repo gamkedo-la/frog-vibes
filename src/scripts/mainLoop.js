@@ -1,28 +1,29 @@
 import EventChannel from "./EventChannel";
 var started = false;
-import graphics, {graphicsEvent}  from "./graphicscommon";
+import { run as runGraphics } from "./graphicscommon";
 
-export const events = new EventChannel();
+export const updateEvent = new EventChannel();
 
-export const  Start = () => { 
+export const Start = () => {
   if (started) return;
   window.requestAnimationFrame(loop);
   started = true;
 };
 
-export const Pause = () => { 
+export const Pause = () => {
   started = false;
 };
-
+export const addUpdate = (fn) => {
+  updateEvent.on("Update", fn);
+};
 function update(progress) {
   // Update the state of the world for the elapsed time since last render
-  events.emit("Update", { detail: progress });
+  updateEvent.emit("Update", { detail: progress });
 }
 
 function draw() {
   // Draw the state of the world
-  graphics.clear();
-  graphicsEvent.emit("Draw");
+  runGraphics();
 }
 
 function loop(timestamp) {
