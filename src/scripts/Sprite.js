@@ -98,7 +98,6 @@ export default class spriteClass {
   draw = () => {
     if (this.drawFrame) {
       // this version of drawImage is needed to point to different frames in sprite sheet
-      console.log(this.frameIndex);
       graphics.drawFrame(
         this.spriteSheet,
         this.frameX,

@@ -10,7 +10,7 @@ export const Start = () => {
   started = true;
 };
 
-export const Pause = () => {
+export const pause = () => {
   started = false;
 };
 export const addUpdate = (fn) => {

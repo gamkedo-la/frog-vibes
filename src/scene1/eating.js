@@ -12,13 +12,5 @@ export const IsHit = () => {track.IsHit();};
 export default testimg;
 
 import testimg2 from "./img/Sprite-0001.png";
-console.log(testimg2);
-// var img = new Image();
-// img.src = testimg2;
-// addDraw(() => {
-//   console.log("Drawing!!");
-//   graphics.drawImage(img, 0, 0);
-// });
-
 new Sprite(testimg2, 2, 1);
 
