@@ -1,4 +1,4 @@
-import graphics, { addDraw } from "./graphicscommon";
+import graphics, { addDraw, removeDraw } from "./graphicscommon";
 import { addUpdate } from "./mainLoop";
 
 // class for animations
@@ -18,32 +18,46 @@ export default class spriteClass {
   drawFrame;
   currentTime;
   timePerFrame = 416.66; //(15 / 60) * 1000; // 15 frames every 60 seconds but in miliseconds
+  timePerFrameSave = 0;
   secretCanvas = undefined;
   getImgData = undefined;
 
   hasFinishedLoop = false;
+  stopped = false;
 
   constructor(path, col, row) {
     this.spriteSheet.onload = this.onLoad;
     this.addImage(path, col, row);
     this.drawFrame = false;
+    this.timePerFrameSave = this.timePerFrame;
     addDraw(this.draw);
     addUpdate(this.update);
   }
+  stop() {
+    this.stopped = true;
+    removeDraw(this.draw);
+    this.timePerFrame = 0;
+    this.drawFrame = false;
+  }
+
   addImage(path, col, row) {
     // TODO: make a dictonary of added images, or some way to quicky switch between animations
     this.columns = col;
     this.rows = row;
     this.spriteSheet.src = path;
   }
+
   onLoad = () => {
     this.frameWidth = this.spriteSheet.naturalWidth / this.columns;
     this.frameHeight = this.spriteSheet.naturalHeight / this.rows;
     this.frameTotal = this.columns * this.rows;
-    this.loopFrames = true;
-    this.reset();
+    this.loopFrames = true;    
     this.frameIndex = 1;
+    if (!this.stopped) {
+      this.reset();
+    }
   };
+
   // set sprite sheet to draw from and defines animation speed
   setSprite(newSpriteSheet, newWidth, newHeight, newTotal, newSpeed, loop) {
     if (!newSpriteSheet) {
@@ -92,6 +106,7 @@ export default class spriteClass {
     this.frameX = 0;
     this.frameY = 0;
     this.hasFinishedLoop = false;
+    this.timePerFrame = this.timePerFrameSave;
     this.drawFrame = true;
   }
   // draws current sprite frame
@@ -109,8 +124,6 @@ export default class spriteClass {
         this.frameWidth,
         this.frameHeight
       );
-    } else {
-      console.log("no draww");
     }
   };
 
@@ -148,7 +161,7 @@ export default class spriteClass {
         }
       }
     } else {
-      console.log(this.frameTotal + " " + this.timePerFrame);
+      //console.log(this.frameTotal + " " + this.timePerFrame);
     }
   };
 

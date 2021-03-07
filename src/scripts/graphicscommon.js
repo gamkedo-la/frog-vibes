@@ -81,5 +81,8 @@ export const run = () => {
 export const addDraw = (fn) => {
   drawEvent.addEventListener("Draw", fn);
 };
+export const removeDraw = (fn) => {
+  drawEvent.addEventListener; ("Draw", fn);
+};
 export const drawEvent = new EventChannel();
 export default graphics;

@@ -1,5 +1,5 @@
-import {pause} from "./mainLoop.js"
-import Sprite from "./Sprite"
+import {pause} from "./mainLoop.js";
+import Sprite from "./Sprite";
 
 var isEnabled = false;
 
@@ -20,7 +20,7 @@ function handlePauseButton() {
             console.log(e.key);
             console.log(isEnabled);
 
-            if (!isEnabled) { return }
+            if (!isEnabled) { return; }
 
             // I want to check if the button is pressed
             if (e.key == "f") {
@@ -39,7 +39,7 @@ function init() {
 
 // When I click on the unpause button, the game continues and the UI goes away.
 function handleUnPause() {
-    if (!isEnabled) { return }
+    if (!isEnabled) { return; }
 
 }
 
@@ -47,9 +47,9 @@ function handleUnPause() {
 // When I pause the game I want to see some UI.
 // On the UI I want there to be a button to unpause.
 function displayUI() {
-    if (!isEnabled) { return }
+    if (!isEnabled) { return; }
 
     new Sprite("../pauseMenu/pauseMenu.jpg", 1, 1);
 }
 
-export default {enable, disable, init}
+export default {enable, disable, init};
