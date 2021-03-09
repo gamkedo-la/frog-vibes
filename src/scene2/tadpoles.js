@@ -1,5 +1,6 @@
 import Sprite from "../scripts/Sprite";
 import Track from "../scripts/Track";
+import { Pollywog } from "./pollywog";
 
 const debugme = true;
 
