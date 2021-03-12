@@ -21,14 +21,11 @@ function disable () {
 // I want to be able to press a button and pause the game.
 function handlePauseButton() {
 
-    document.addEventListener("keypress", function (e) {
-            console.log(e.key);
-            console.log(isEnabled);
-
+    document.addEventListener("keydown", function (e) {
             if (!isEnabled) { return; }
 
             // I want to check if the button is pressed
-            if (e.key == "f") {
+            if (e.key == "Escape") {
                 // Then I want to display the UI.
                 displayUI();
 
