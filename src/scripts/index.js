@@ -53,8 +53,9 @@ document.onkeydown = function (e) {
       currentSceneNumber = 1;
 
     console.log("Starting Scene " + currentSceneNumber);
-    
+
     scenes[currentSceneNumber].start();
+    pauseMenu.enable();
 
     inScene = true;
     return;
