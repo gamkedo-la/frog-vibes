@@ -1,5 +1,10 @@
 import {pause} from "./mainLoop.js";
 import Sprite from "./Sprite";
+import index from "./index";
+
+import {Stop as StopScene1} from "../scene1";
+
+import pauseImg from "../pauseMenu/pauseMenu.png";
 
 var isEnabled = false;
 
@@ -49,7 +54,7 @@ function handleUnPause() {
 function displayUI() {
     if (!isEnabled) { return; }
 
-    new Sprite("../pauseMenu/pauseMenu.jpg", 1, 1);
+    var pauseSprite = new Sprite(pauseImg, 1, 1);
 }
 
 export default {enable, disable, init};

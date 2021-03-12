@@ -27,7 +27,10 @@ function draw() {
 }
 
 function loop(timestamp) {
-  if (!started) return;
+  if (!started){
+    draw(); 
+    return;
+  }
   var progress = timestamp - lastRender;
 
   update(progress);
