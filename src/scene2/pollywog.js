@@ -30,7 +30,7 @@ export class Pollywog {
 		this.age++;
 		this.angle = Math.cos(this.age/1000)*2*Math.PI; // swim in a circle
 		this.angle += Math.cos(this.age/33)*0.1; // and wobble back and forth
-		this.speed += 0.00222; // grow stronger over time
+		this.speed += 0.01; // grow stronger over time
         this.spr.x += this.speed; // move
         this.spr.y = this.spawnY + Math.cos(this.spr.x/20)*8; // wobble
         if (this.spr.x > 320) this.spr.x = -200; // wrap
