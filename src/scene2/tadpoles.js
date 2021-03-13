@@ -12,7 +12,9 @@ export const Start = () => {
 	
 	track.Start();
 	
-	let test = new Pollywog();
+	for (let n=0; n<20; n++) {
+        let test = new Pollywog();
+    }
 	
 };
 
