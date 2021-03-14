@@ -9,6 +9,7 @@ import {Start as StartScene6, IsHit as IsHitScene6} from "../scene6";
 
 import graphics from "./graphicscommon";
 import { Start as StartMainLoop } from "./mainLoop";
+import Track from "./Track";
 import pauseMenu from "./pauseMenu";
 import Sprite from "./Sprite";
 
@@ -43,6 +44,17 @@ document.onkeydown = function (e) {
     console.log("Stopping Splash");
     hasStarted = true;    
     splashScreen.stop();
+  }
+
+  if (hasStarted && inScene) {
+    if (e.keyCode == 77) { // key 'M' to toggle mute on all tracks
+      if (Track.ToggleMuteAll()) {
+        console.log("All tracks muted!");
+      }
+      else {
+        console.log("All tracks unmuted!");
+      }
+    }
   }
 
   if (!inScene) {

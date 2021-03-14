@@ -36,5 +36,11 @@ class Track {
     beatMachine.PlayTrack(this.song, 144);
     // console.log(this.song);
   }
+  Stop() {
+    beatMachine.StopTrack();
+  }
+  static ToggleMuteAll() {
+    return BeatMachine.ToggleMuteAllTracks();
+  }
 }
 export default Track;

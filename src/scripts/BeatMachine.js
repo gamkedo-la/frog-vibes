@@ -1,4 +1,5 @@
 class BeatMachinePlayer {
+  static tracks = []
   BPM = 120
   beatLength = 0.5
   beatTimeMult = 2
@@ -8,6 +9,7 @@ class BeatMachinePlayer {
     this.SetBPM(bpm);
     if (this.currentTrack != null) this.currentTrack.pause();
     this.currentTrack = new Audio(fullFilenameWithPath);
+    BeatMachinePlayer.tracks.push(this.currentTrack);
     this.currentTrack.play();
   }
   StopTrack = () => {
@@ -33,6 +35,20 @@ class BeatMachinePlayer {
     this.beatLength = 60 / this.BPM;
     this.beatTimeMult = this.BPM / 60;
     this.AnimeDelta = this.BPM / 120;
+  }
+  static ToggleMuteAllTracks = () => {
+    let muted = true;
+    BeatMachinePlayer.tracks.forEach(track => {
+      if (track.volume > 0) {
+        track.volume = 0;
+        muted = true;      
+      }
+      else {
+        track.volume = 1;
+        muted = false;
+      }    
+    });
+    return muted;
   }
 }
 
