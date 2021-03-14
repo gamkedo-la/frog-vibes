@@ -33,11 +33,17 @@ export default class spriteClass {
     addDraw(this.draw);
     addUpdate(this.update);
   }
-  stop() {
+  Stop() {
     this.stopped = true;
     removeDraw(this.draw);
     this.timePerFrame = 0;
     this.drawFrame = false;
+  }
+  start() {
+    this.stopped = false;
+    addDraw(this.draw);
+    this.timePerFrame = timePerFrameSave;
+    this.drawFrame = true;
   }
 
   addImage(path, col, row) {

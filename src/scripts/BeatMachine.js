@@ -1,20 +1,20 @@
 class BeatMachinePlayer {
-  static tracks = []
-  BPM = 120
-  beatLength = 0.5
-  beatTimeMult = 2
-  AnimeDelta = 1
-  currentTrack = null
+  static tracks = []  
+  BPM = 120;
+  beatLength = 0.5;
+  beatTimeMult = 2;
+  AnimeDelta = 1;
+  currentTrack = null;
   PlayTrack = (fullFilenameWithPath, bpm) => {
     this.SetBPM(bpm);
     if (this.currentTrack != null) this.currentTrack.pause();
     this.currentTrack = new Audio(fullFilenameWithPath);
     BeatMachinePlayer.tracks.push(this.currentTrack);
     this.currentTrack.play();
-  }
+  };
   StopTrack = () => {
     if (this.currentTrack != null) this.currentTrack.pause();
-  }
+  };
   GetBeat = () => {
     if (this.currentTrack != null)
       return (
@@ -23,13 +23,13 @@ class BeatMachinePlayer {
     else {
       return 0;
     }
-  }
+  };
   GetTimeCode = () => {
     if (this.currentTrack != null) return this.currentTrack.currentTime;
     else {
       return 0;
     }
-  }
+  };
   SetBPM = (bpm) => {
     this.BPM = bpm;
     this.beatLength = 60 / this.BPM;

@@ -15,5 +15,5 @@ export default testimg;
 
 import testimg2 from "./img/Sprite-0001.png";
 const spriteThing = new Sprite(testimg2, 1, 1);
-spriteThing.drawFrame = false;
+spriteThing.Stop();
 

@@ -8,12 +8,12 @@ var track = new Track("public/audio/track1.wav", [10, 12, 14, 16]);
 
 export const Start = () => {
     track.Start();
-    spriteThing.drawFrame = true;
+    spriteThing.Start();
 };
 export const IsHit = () => {track.IsHit();};
 export default testimg;
 
 import testimg2 from "./img/Sprite-0001.png";
 const spriteThing = new Sprite(testimg2, 1, 1);
-spriteThing.drawFrame = false;
+spriteThing.Stop();
 

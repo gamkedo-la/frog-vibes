@@ -43,7 +43,7 @@ document.onkeydown = function (e) {
   if (!hasStarted) {
     console.log("Stopping Splash");
     hasStarted = true;    
-    splashScreen.stop();
+    splashScreen.Stop();
   }
 
   if (hasStarted && inScene) {
