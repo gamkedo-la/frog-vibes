@@ -19,7 +19,7 @@ export class Pollywog {
     
     constructor() {
         this.spr = new Sprite(pollywogSprite, 2, 1);
-        this.spawnY = Math.random()*100;
+        this.spawnY = 20+Math.random()*100;
         this.speed = Math.random();
         this.spr.x = -100 + Math.random()*-100;
         this.spr.y = this.spawnY;

@@ -1,6 +1,9 @@
 import Sprite from "../scripts/Sprite";
 import Track from "../scripts/Track";
 import { Pollywog } from "./pollywog";
+import { Lillypad } from "./lillypad";
+import { Grass } from "./grass";
+import { Water } from "./water";
 
 const debugme = true;
 
@@ -12,10 +15,21 @@ export const Start = () => {
 	
 	track.Start();
 	
+	for (let n=0; n<12; n++) {
+        let splash = new Water();
+    }
+
 	for (let n=0; n<20; n++) {
-        let test = new Pollywog();
+        let tad = new Pollywog();
     }
 	
+	for (let n=0; n<6; n++) {
+        let pad = new Lillypad();
+    }
+
+	for (let n=0; n<6; n++) {
+        let sprig = new Grass();
+    }
 };
 
 export const IsHit = () => { 
