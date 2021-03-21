@@ -1,4 +1,4 @@
-import {pause} from "./mainLoop.js";
+import {pause, unpause} from "./mainLoop.js";
 import Sprite from "./Sprite";
 import index from "./index";
 
@@ -7,6 +7,7 @@ import {Stop as StopScene1} from "../scene1";
 import pauseImg from "../pauseMenu/pauseMenu.png";
 
 var isEnabled = false;
+var isPaused = false;
 
 // I want to enable this functionality.
 function enable() {
@@ -26,11 +27,25 @@ function handlePauseButton() {
 
             // I want to check if the button is pressed
             if (e.key == "Escape") {
-                // Then I want to display the UI.
-                displayUI();
 
-                // If it is pressed I want to stop the main loop
-                pause();
+                // I game is not paused, then pause it
+                if (!isPaused) {
+                    // Then I want to display the UI.
+                    displayUI();
+
+                    // If it is pressed I want to stop the main loop
+                    pause();
+
+                    isPaused = true;
+                }
+                else{
+                    // I remove the pause UI
+                    pauseSprite.Stop();
+
+                    // I restart the game
+                    unpause();
+                    isPaused = false;
+                }
             }
         }, false);
 }
@@ -51,7 +66,8 @@ function handleUnPause() {
 function displayUI() {
     if (!isEnabled) { return; }
 
-    var pauseSprite = new Sprite(pauseImg, 1, 1);
+    pauseSprite = new Sprite(pauseImg, 1, 1);
 }
 
+var pauseSprite = null;
 export default {enable, disable, init};

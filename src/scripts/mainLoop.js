@@ -13,6 +13,9 @@ export const Start = () => {
 export const pause = () => {
   started = false;
 };
+export const unpause = () => {
+  started = true;
+};
 export const addUpdate = (fn) => {
   updateEvent.on("Update", fn);
 };
@@ -27,16 +30,14 @@ function draw() {
 }
 
 function loop(timestamp) {
-  if (!started){
-    draw(); 
-    return;
+  if (started) {
+    var progress = timestamp - lastRender;
+    lastRender = timestamp;
+  
+    update(progress);
   }
-  var progress = timestamp - lastRender;
 
-  update(progress);
   draw();
-
-  lastRender = timestamp;
   window.requestAnimationFrame(loop);
 }
 var lastRender = 0;
