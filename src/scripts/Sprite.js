@@ -42,7 +42,7 @@ export default class spriteClass {
   start() {
     this.stopped = false;
     addDraw(this.draw);
-    this.timePerFrame = timePerFrameSave;
+    this.timePerFrame = this.timePerFrameSave;
     this.drawFrame = true;
   }
 
@@ -77,9 +77,9 @@ export default class spriteClass {
     frameHeight = newHeight;
     frameTotal = newTotal;
     if (newSpeed > 0) {
-      timePerFrame = 1 / newSpeed;
+      this.timePerFrame = 1 / newSpeed;
     } else {
-      timePerFrame = 0;
+      this.timePerFrame = 0;
     }
     loopFrames = loop;
     this.reset();
@@ -91,7 +91,7 @@ export default class spriteClass {
     frameX = result.x;
     frameY = result.y;
     frameIndex = index % frameTotal;
-    timePerFrame = 0;
+    this.timePerFrame = 0;
     drawFrame = true;
   }
 
@@ -100,9 +100,9 @@ export default class spriteClass {
   }
   setSpeed(newSpeed) {
     if (newSpeed > 0) {
-      timePerFrame = 1 / newSpeed;
+      this.timePerFrame = 1 / newSpeed;
     } else {
-      timePerFrame = 0;
+      this.timePerFrame = 0;
     }
   }
 
