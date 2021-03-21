@@ -4,7 +4,7 @@ import Track from "../scripts/Track";
 import { addUpdate } from "../scripts/mainLoop";
 
 //AUDIO
-var track = new Track("public/audio/track1.wav", [10, 12, 14, 16]);
+var track = new Track("public/audio/track1.wav", [10, 12, 14, 16], "public/audio/scene01/kerop.wav");
 var timePerFrame = 416.66;
 //SPRITE
 import testimg2 from "./img/frog.png";

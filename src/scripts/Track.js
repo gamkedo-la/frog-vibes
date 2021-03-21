@@ -4,16 +4,19 @@ import EventChannel from "./EventChannel";
 const beatMachine = new BeatMachine();
 
 class Track {
+  static isMuted = false;
   track = [];
   fullTrack = [];
+  hitSfx = null;
   song = null;
   marginOfError = 0.5;
   Events = new EventChannel();
-  constructor(song, trackList) {
+  constructor(song, trackList, hitSfx = null) {
     this.song = song;
     // //TODO: reverse & validate
     this.track = [...trackList];
     this.fullTrack = [...trackList];
+    this.hitSfx = new Audio(hitSfx);
     updateEvent.on("Update", this.Update);
   }
   Update = () => {
@@ -32,6 +35,9 @@ class Track {
       console.log("Hit!!!   " + targetBeat);
       this.Events.emit("Hit", { detail: targetBeat });
       this.track.shift();
+      if (this.hitSfx != null && !Track.isMuted) {
+        this.hitSfx.play();
+      }
       return true;
     }
     return false;
@@ -44,7 +50,8 @@ class Track {
     beatMachine.StopTrack();
   }
   static ToggleMuteAll() {
-    return BeatMachine.ToggleMuteAllTracks();
+    Track.isMuted = BeatMachine.ToggleMuteAllTracks();    
+    return Track.isMuted;
   }
 }
 export default Track;
