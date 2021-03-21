@@ -16,7 +16,9 @@ class Track {
     // //TODO: reverse & validate
     this.track = [...trackList];
     this.fullTrack = [...trackList];
-    this.hitSfx = new Audio(hitSfx);
+    if (hitSfx) {
+      this.hitSfx = new Audio(hitSfx);
+    }
     updateEvent.on("Update", this.Update);
   }
   Update = () => {
