@@ -52,7 +52,8 @@ track.Events.on("Hit", (e) => {
 });
 flySprite.Stop();
 
-const flySprite1 = new Sprite(fly, 1, 1);
+import bee from "./img/bee.png";
+const flySprite1 = new Sprite(bee, 2, 1);
 track.Events.on("Hit", (e) => {
   if (e.detail == 12) {
     flySprite1.Stop();
