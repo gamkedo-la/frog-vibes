@@ -16,8 +16,9 @@ import tongue from "./img/frog_tongue.png";
 const spriteTongue = new Sprite(tongue, 1, 1);
 spriteTongue.Stop();
 const TONGUE_X = 100;
-const TONGUE_Y = 74;
+const TONGUE_Y = 34;
 const TONGUE_EXTENDS_Y = 14;
+const TONGUE_EXTENDS_Y_SPEED = 6;
 spriteTongue.x = TONGUE_X;
 spriteTongue.y = TONGUE_Y;
 var isTongueStretched = false;
@@ -28,8 +29,9 @@ const spritesTongueBody = [
   new Sprite(tongueBody, 1, 1),
   new Sprite(tongueBody, 1, 1)
 ];
-const TONGUE_BODY_Y = 74;
-const TONGUE_BODY_HEIGHT = 43;
+const TONGUE_BODY_Y = 64;
+const TONGUE_BODY_HEIGHT = 23;
+const TONGUE_BODY_EXTENDS_Y_SPEED = 6;
 spritesTongueBody.forEach((spriteTongueBody, i) => {
   spriteTongueBody.Stop();
   spriteTongueBody.x = TONGUE_X;
@@ -107,17 +109,17 @@ export const Start = () => {
 
   addUpdate(e => {
     if (isTongueStretched && spriteTongue.y > TONGUE_EXTENDS_Y) {
-      spriteTongue.y -= 10;
+      spriteTongue.y -= TONGUE_EXTENDS_Y_SPEED;
       spritesTongueBody.forEach(spriteTongueBody => {
-        spriteTongueBody.y -= 10;
+        spriteTongueBody.y -= TONGUE_BODY_EXTENDS_Y_SPEED;
       });
     }
     else {
       isTongueStretched = false;
       if (spriteTongue.y < TONGUE_Y) {
-        spriteTongue.y += 10;
+        spriteTongue.y += TONGUE_EXTENDS_Y_SPEED;
         spritesTongueBody.forEach(spriteTongueBody => {
-          spriteTongueBody.y += 10;
+          spriteTongueBody.y += TONGUE_BODY_EXTENDS_Y_SPEED;
         });
       }
       else {
