@@ -17,3 +17,11 @@ import testimg2 from "./img/Sprite-0001.png";
 const spriteThing = new Sprite(testimg2, 1, 1);
 spriteThing.Stop();
 
+export const IsPaused = () => {
+    track.Stop();
+};
+
+export const IsUnPaused = () => {
+    track.Continue();
+};
+

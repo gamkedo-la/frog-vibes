@@ -1,13 +1,28 @@
 import {pause, unpause} from "./mainLoop.js";
 import Sprite from "./Sprite";
-import index from "./index";
+import {currentSceneNumber} from "./index";
 
-import {Stop as StopScene1} from "../scene1";
+import {IsPaused as PauseScene1, IsUnPaused as UnPauseScene1} from "../scene1";
+import {IsPaused as PauseScene2, IsUnPaused as UnPauseScene2} from "../scene2";
+import {IsPaused as PauseScene3, IsUnPaused as UnPauseScene3} from "../scene3";
+import {IsPaused as PauseScene4, IsUnPaused as UnPauseScene4} from "../scene4";
+import {IsPaused as PauseScene5, IsUnPaused as UnPauseScene5} from "../scene5";
+import {IsPaused as PauseScene6, IsUnPaused as UnPauseScene6} from "../scene6";
 
 import pauseImg from "../pauseMenu/pauseMenu.png";
 
 var isEnabled = false;
 var isPaused = false;
+
+var scenes = [
+    {},
+    {pauseTrack:PauseScene1, unPauseTrack:UnPauseScene1},
+    {pauseTrack:PauseScene2, unPauseTrack:UnPauseScene2},
+    {pauseTrack:PauseScene3, unPauseTrack:UnPauseScene3},
+    {pauseTrack:PauseScene4, unPauseTrack:UnPauseScene4},
+    {pauseTrack:PauseScene5, unPauseTrack:UnPauseScene5},
+    {pauseTrack:PauseScene6, unPauseTrack:UnPauseScene6}
+  ];
 
 // I want to enable this functionality.
 function enable() {
@@ -28,6 +43,8 @@ function handlePauseButton() {
             // I want to check if the button is pressed
             if (e.key == "Escape") {
 
+                console.log(currentSceneNumber);
+
                 // I game is not paused, then pause it
                 if (!isPaused) {
                     // Then I want to display the UI.
@@ -35,6 +52,7 @@ function handlePauseButton() {
 
                     // If it is pressed I want to stop the main loop
                     pause();
+                    scenes[currentSceneNumber].pauseTrack();
 
                     isPaused = true;
                 }
@@ -44,6 +62,8 @@ function handlePauseButton() {
 
                     // I restart the game
                     unpause();
+                    scenes[currentSceneNumber].unPauseTrack();
+                    
                     isPaused = false;
                 }
             }

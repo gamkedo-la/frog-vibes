@@ -51,6 +51,9 @@ class Track {
   Stop() {
     beatMachine.StopTrack();
   }
+  Continue() {
+    beatMachine.ContinueTrack();
+  }
   static ToggleMuteAll() {
     Track.isMuted = BeatMachine.ToggleMuteAllTracks();    
     return Track.isMuted;

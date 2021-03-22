@@ -15,6 +15,9 @@ class BeatMachinePlayer {
   StopTrack = () => {
     if (this.currentTrack != null) this.currentTrack.pause();
   };
+  ContinueTrack = () => {
+    if (this.currentTrack != null) this.currentTrack.play();
+  }
   GetBeat = () => {
     if (this.currentTrack != null)
       return (

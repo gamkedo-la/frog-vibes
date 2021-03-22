@@ -154,3 +154,11 @@ export const Start = () => {
 export const IsHit = () => {
   track.IsHit();
 };
+
+export const IsPaused = () => {
+  track.Stop();
+};
+
+export const IsUnPaused = () => {
+  track.Continue();
+};

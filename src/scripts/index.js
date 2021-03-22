@@ -15,7 +15,8 @@ import Sprite from "./Sprite";
 
 var hasStarted = false;
 var inScene = false;
-var currentSceneNumber = 1;
+
+export var currentSceneNumber = 1;
 
 var scenes = [
   {},
