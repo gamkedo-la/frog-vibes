@@ -43,8 +43,6 @@ function handlePauseButton() {
             // I want to check if the button is pressed
             if (e.key == "Escape") {
 
-                console.log(currentSceneNumber);
-
                 // I game is not paused, then pause it
                 if (!isPaused) {
                     // Then I want to display the UI.
@@ -90,4 +88,5 @@ function displayUI() {
 }
 
 var pauseSprite = null;
+
 export default {enable, disable, init};

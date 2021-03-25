@@ -32,12 +32,13 @@ function draw() {
 function loop(timestamp) {
   if (started) {
     var progress = timestamp - lastRender;
-    lastRender = timestamp;
-  
     update(progress);
   }
+  
+  lastRender = timestamp;
 
   draw();
   window.requestAnimationFrame(loop);
 }
+
 var lastRender = 0;
