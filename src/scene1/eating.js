@@ -68,6 +68,9 @@ const bugSprites = [
   new Sprite(fly, 1, 1),
   new Sprite(fly, 1, 1)
 ];
+bugSprites.map(bugSprite => {
+  bugSprite.Stop();
+});
 
 const TongueStretchedHit = (isHit = true) => {
   if (!isTongueStretched) {    
