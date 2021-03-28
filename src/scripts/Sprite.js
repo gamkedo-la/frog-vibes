@@ -31,6 +31,15 @@ export default class spriteClass {
     this.addImage(path, col, row);
     this.drawFrame = false;
     this.timePerFrameSave = this.timePerFrame;
+    this.animation["default"] = {
+      startIndex: 0,
+      totalFrames: this.columns * this.rows,
+      speed: this.timePerFrame,
+    };
+    this.currentAnimation = "default";
+    this.frameTotal = this.columns * this.rows;
+    this.loopFrames = true;
+    
     addDraw(this.draw);
     addUpdate(this.update);
   }
@@ -56,6 +65,7 @@ export default class spriteClass {
   setAnimation = (name) => {
     if (this.animation[name]) {
       this.currentAnimation = name;
+      this.frameTotal = this.animation[name].totalFrames + this.animation[name].startIndex;
       this.reset();
     } else {
       console.error(`aaay so like, there's no animation called ${name} registered`);
@@ -67,19 +77,13 @@ export default class spriteClass {
         totalFrames: totalFrames,
         speed: this.timePerFrame,
       };
+    console.log(`current anim: ${this.currentAnimation}`);
   }
   onLoad = () => {
     this.frameWidth = this.spriteSheet.naturalWidth / this.columns;
     this.frameHeight = this.spriteSheet.naturalHeight / this.rows;
-    this.frameTotal = this.columns * this.rows;
-    this.loopFrames = true;    
-    this.frameIndex = 0;
-    this.animation["default"] = {
-      startIndex: 0,
-      totalFrames: this.columns * this.rows,
-      speed: this.timePerFrame,
-    };
-    this.currentAnimation = "default";
+    console.log(`current anim: ${this.currentAnimation}`);
+
     if (!this.stopped) {
       this.reset();
     }
@@ -91,12 +95,12 @@ export default class spriteClass {
       throw "Missing spriiiiiiite";
     }
     hasFinishedLoop = false;
-    spriteSheet = newSpriteSheet;
-    frameX = 0;
-    frameY = 0;
-    frameWidth = newWidth;
-    frameHeight = newHeight;
-    frameTotal = newTotal;
+    this.spriteSheet = newSpriteSheet;
+    this.frameX = 0;
+    this.frameY = 0;
+    this.frameWidth = newWidth;
+    this.frameHeight = newHeight;
+    this.frameTotal = newTotal;
     if (newSpeed > 0) {
       this.timePerFrame = 1 / newSpeed;
     } else {
@@ -130,8 +134,9 @@ export default class spriteClass {
   reset() {
     this.currentTime = 0;
     this.frameIndex = this.animation[this.currentAnimation].startIndex;
-    this.frameX = 0;
-    this.frameY = 0;
+    var pos = this.calculateFrameIndex(this.frameIndex);
+    this.frameX = pos.x;
+    this.frameY = pos.y;
     this.hasFinishedLoop = false;
     this.timePerFrame = this.timePerFrameSave;
     this.drawFrame = true;
@@ -179,7 +184,7 @@ export default class spriteClass {
 
         if (this.frameX >= this.spriteSheet.width) {
           this.frameX = 0;
-          this.frameY += frameHeight;
+          this.frameY += this.frameHeight;
 
           if (this.frameY >= this.spriteSheet.height) {
             this.frameY = 0;

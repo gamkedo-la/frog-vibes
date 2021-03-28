@@ -4,13 +4,17 @@ import Track from "../scripts/Track";
 import { addUpdate } from "../scripts/mainLoop";
 
 //AUDIO
-var track = new Track("public/audio/track1.wav", [10, 12, 14, 16], "public/audio/scene01/kerop.wav", "public/audio/scene01/ohno.wav");
+var track = new Track("public/audio/track1.wav", [10, 12, 14, 16, 26, 28, 30, 32, 43, 45, 47, 49], "public/audio/scene01/kerop.wav", "public/audio/scene01/ohno.wav");
 var timePerFrame = 416.66;
 
 // SCENE SPRITE
-import testimg2 from "./img/frog.png";
-const spriteThing = new Sprite(testimg2, 2, 1);
+import testimg2 from "./img/scene1sheeeeeet.png";
+const spriteThing = new Sprite(testimg2, 2, 4);
 spriteThing.Stop();
+spriteThing.registerAnimation("Idle", 2, 2);
+spriteThing.registerAnimation("Sad", 6, 1);
+spriteThing.registerAnimation("Happy", 4, 1);
+spriteThing.setAnimation("Idle");
 
 // TONGUE VALUES
 const TONGUE_X = 100;
@@ -66,16 +70,21 @@ const bugSprites = [
   new Sprite(fly, 1, 1),
   new Sprite(bee, 2, 1),
   new Sprite(fly, 1, 1),
-  new Sprite(fly, 1, 1)
+  new Sprite(fly, 1, 1),
+  new Sprite(fly, 1, 1),
+  new Sprite(fly, 1, 1),
+  new Sprite(fly, 1, 1),
+  new Sprite(fly, 1, 1),
+  new Sprite(fly, 1, 1),
+  new Sprite(fly, 1, 1),
+  new Sprite(fly, 1, 1),
+  new Sprite(fly, 1, 1),
 ];
 bugSprites.map(bugSprite => {
   bugSprite.Stop();
 });
-spriteThing.registerAnimation("Sad", 7, 1);
-track.Events.on("Ended", (e) => {
-  console.log("stuff has eneded!");
-  spriteThing.setAnimation("Sad");
-});
+
+
 const TongueStretchedHit = (isHit = true) => {
   if (!isTongueStretched) {    
     isTongueStretchedHit = isHit;
@@ -97,24 +106,29 @@ const TongueStretchedHit = (isHit = true) => {
   }
 };
 
+var totalhits = 0;
 track.Events.on("Hit", e => {
   TongueStretchedHit();
+  totalhits += 1;
+  let i = track.fullTrack.findIndex(x => e.detail == x);
+  bugSprites[i].Stop();
 
-  let bugX = 10;
-  bugSprites.map((sprite, i, bugSprites) => {
-    if (e.detail == bugX) {
-      (sprite => sprite.Stop());
-      bugSprites[i].Stop();
-    }
-    bugX += 2;
-  });
 });
 
 track.Events.on("Miss", e => {  
   TongueStretchedHit(false);
   console.log("Frog tongue stretched out, but nothing happened!");
 });
-
+//ending
+track.Events.on("Ended", (e) => {
+  console.log("stuff has eneded!");
+  if (totalhits == 0) {
+    track.missSfx.play();
+    spriteThing.setAnimation("Sad");
+  } else {
+    spriteThing.setAnimation("Happy");
+  }
+});
 // LESGOOOO
 export const Start = () => {
   track.Start();
@@ -125,10 +139,10 @@ export const Start = () => {
     sprite.reset();
   });
 
-  let bugX = 10;
-  bugSprites.map(sprite => {
-    sprite.x = bugX * 20;
-    bugX += 2;
+
+  bugSprites.map((sprite, i) => {
+    sprite.x = track.fullTrack[i] * 20;
+    
   });
 
   addUpdate(e => {
