@@ -71,7 +71,11 @@ const bugSprites = [
 bugSprites.map(bugSprite => {
   bugSprite.Stop();
 });
-
+spriteThing.registerAnimation("Sad", 7, 1);
+track.Events.on("Ended", (e) => {
+  console.log("stuff has eneded!");
+  spriteThing.setAnimation("Sad");
+});
 const TongueStretchedHit = (isHit = true) => {
   if (!isTongueStretched) {    
     isTongueStretchedHit = isHit;

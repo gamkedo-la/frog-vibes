@@ -21,7 +21,8 @@ export default class spriteClass {
   timePerFrameSave = 0;
   secretCanvas = undefined;
   getImgData = undefined;
-
+  animation = {};
+  currentAnimation = "not set";
   hasFinishedLoop = false;
   stopped = false;
 
@@ -52,13 +53,33 @@ export default class spriteClass {
     this.rows = row;
     this.spriteSheet.src = path;
   }
-
+  setAnimation = (name) => {
+    if (this.animation[name]) {
+      this.currentAnimation = name;
+      this.reset();
+    } else {
+      console.error(`aaay so like, there's no animation called ${name} registered`);
+    }
+  }
+  registerAnimation = (name, startIndex, totalFrames) => {
+      this.animation[name] = {
+        startIndex: startIndex,
+        totalFrames: totalFrames,
+        speed: this.timePerFrame,
+      };
+  }
   onLoad = () => {
     this.frameWidth = this.spriteSheet.naturalWidth / this.columns;
     this.frameHeight = this.spriteSheet.naturalHeight / this.rows;
     this.frameTotal = this.columns * this.rows;
     this.loopFrames = true;    
-    this.frameIndex = 1;
+    this.frameIndex = 0;
+    this.animation["default"] = {
+      startIndex: 0,
+      totalFrames: this.columns * this.rows,
+      speed: this.timePerFrame,
+    };
+    this.currentAnimation = "default";
     if (!this.stopped) {
       this.reset();
     }
@@ -108,7 +129,7 @@ export default class spriteClass {
 
   reset() {
     this.currentTime = 0;
-    this.frameIndex = 0;
+    this.frameIndex = this.animation[this.currentAnimation].startIndex;
     this.frameX = 0;
     this.frameY = 0;
     this.hasFinishedLoop = false;
@@ -162,7 +183,7 @@ export default class spriteClass {
 
           if (this.frameY >= this.spriteSheet.height) {
             this.frameY = 0;
-            this.frameIndex = 0;
+            this.frameIndex = this.animation[this.currentAnimation].startIndex;
           }
         }
       }

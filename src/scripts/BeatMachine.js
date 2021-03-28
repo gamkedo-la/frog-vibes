@@ -27,6 +27,9 @@ class BeatMachinePlayer {
       return 0;
     }
   };
+  isRunning = () => {
+    return this.currentTrack.ended;
+  }
   GetTimeCode = () => {
     if (this.currentTrack != null) return this.currentTrack.currentTime;
     else {

@@ -11,6 +11,8 @@ class Track {
   missSfx = null;
   song = null;
   marginOfError = 0.5;
+  isRunning = false;
+  isStarted = false;
   Events = new EventChannel();
   constructor(song, trackList, hitSfx = null, missSfx = null) {
     this.song = song;
@@ -29,6 +31,12 @@ class Track {
     if (this.track[0] + this.marginOfError < beatMachine.GetBeat()) {
       console.log("Missed without pressing a key!!!   " + this.track[0]);      
       this.track.shift();
+    }
+    if (this.isStarted && this.isRunning) {
+      this.isRunning = !beatMachine.isRunning();
+      if(!this.isRunning){
+        this.Events.emit("Ended", { detail: "bwaap bwaaaaaa" });
+      }
     }
   };
   IsHit = () => {
@@ -61,13 +69,17 @@ class Track {
   };
   Start() {
     beatMachine.PlayTrack(this.song, 144);
+    this.isRunning = true;
+    this.isStarted = true;
     // console.log(this.song);
   }
   Stop() {
     beatMachine.StopTrack();
+    this.isRunning = false;
   }
   Continue() {
     beatMachine.ContinueTrack();
+    this.isRunning = true;
   }
   static ToggleMuteAll() {
     Track.isMuted = BeatMachine.ToggleMuteAllTracks();    
