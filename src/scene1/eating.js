@@ -32,65 +32,40 @@ const spritesTongueBody = [
 const TONGUE_BODY_Y = 64;
 const TONGUE_BODY_HEIGHT = 23;
 const TONGUE_BODY_EXTENDS_Y_SPEED = 6;
-spritesTongueBody.forEach((spriteTongueBody, i) => {
+spritesTongueBody.map((spriteTongueBody, i) => {
   spriteTongueBody.Stop();
   spriteTongueBody.x = TONGUE_X;
   spriteTongueBody.y = TONGUE_BODY_Y + TONGUE_BODY_HEIGHT * i;
 });
 
 import fly from "./img/fly.png";
-const flySprite = new Sprite(fly, 1, 1);
-track.Events.on("Hit", (e) => {
-  if (e.detail == 10) {
-    flySprite.Stop();
-    isTongueStretched = true;
-    spriteTongue.reset();
-    spritesTongueBody.forEach(spriteTongueBody => {
-      spriteTongueBody.reset();
-    });
-  }
-});
-flySprite.Stop();
-
 import bee from "./img/bee.png";
-const flySprite1 = new Sprite(bee, 2, 1);
-track.Events.on("Hit", (e) => {
-  if (e.detail == 12) {
-    flySprite1.Stop();
-    isTongueStretched = true;
-    spriteTongue.reset();
-    spritesTongueBody.forEach(spriteTongueBody => {
-      spriteTongueBody.reset();
-    });
-  }
-});
-flySprite1.Stop();
+const flySprites = [
+  new Sprite(fly, 1, 1),
+  new Sprite(bee, 2, 1),
+  new Sprite(fly, 1, 1),
+  new Sprite(fly, 1, 1)
+];
 
-const flySprite2 = new Sprite(fly, 1, 1);
-track.Events.on("Hit", (e) => {
-  if (e.detail == 14) {
-    flySprite2.Stop();
-    isTongueStretched = true;
-    spriteTongue.reset();
-    spritesTongueBody.forEach(spriteTongueBody => {
-      spriteTongueBody.reset();
-    });
-  }
-});
-flySprite2.Stop();
+const StretchTongueEatBug = bugSprite => {  
+  bugSprite.Stop();
+  isTongueStretched = true;
+  spriteTongue.reset();
+  spritesTongueBody.map(spriteTongueBody => {
+    spriteTongueBody.reset();
+  });
+};
 
-const flySprite3 = new Sprite(fly, 1, 1);
-track.Events.on("Hit", (e) => {
-  if (e.detail == 16) {
-    flySprite3.Stop();
-    isTongueStretched = true;
-    spriteTongue.reset();
-    spritesTongueBody.forEach(spriteTongueBody => {
-      spriteTongueBody.reset();
-    });
-  }
+track.Events.on("Hit", e => {
+  let bugX = 10;
+  flySprites.map((sprite, i, flySprites) => {
+    if (e.detail == bugX) {
+      StretchTongueEatBug(sprite);
+      flySprites[i].Stop();
+    }
+    bugX += 2;
+  });
 });
-flySprite3.Stop();
 
 // LESGOOOO
 export const Start = () => {
@@ -98,20 +73,20 @@ export const Start = () => {
   
   spriteThing.reset();  
   
-  flySprite.reset();
-  flySprite1.reset();
-  flySprite2.reset();
-  flySprite3.reset();
-  flySprite.x = 10 * 20;
-  flySprite1.x = 12 * 20;
-  flySprite2.x = 14 * 20;
-  flySprite3.x = 16 * 20;
-  
+  flySprites.map(sprite => {
+    sprite.reset();
+  });
+
+  let bugX = 10;
+  flySprites.map(sprite => {
+    sprite.x = bugX * 20;
+    bugX += 2;
+  });
 
   addUpdate(e => {
     if (isTongueStretched && spriteTongue.y > TONGUE_EXTENDS_Y) {
       spriteTongue.y -= TONGUE_EXTENDS_Y_SPEED;
-      spritesTongueBody.forEach(spriteTongueBody => {
+      spritesTongueBody.map(spriteTongueBody => {
         spriteTongueBody.y -= TONGUE_BODY_EXTENDS_Y_SPEED;
       });
     }
@@ -119,35 +94,24 @@ export const Start = () => {
       isTongueStretched = false;
       if (spriteTongue.y < TONGUE_Y) {
         spriteTongue.y += TONGUE_EXTENDS_Y_SPEED;
-        spritesTongueBody.forEach(spriteTongueBody => {
+        spritesTongueBody.map(spriteTongueBody => {
           spriteTongueBody.y += TONGUE_BODY_EXTENDS_Y_SPEED;
         });
       }
       else {
         spriteTongue.Stop();
-        spritesTongueBody.forEach(spriteTongueBody => {
+        spritesTongueBody.map(spriteTongueBody => {
           spriteTongueBody.Stop();
         });
       }
     }
   });
 
-  addUpdate((e) => {
-    //needs to move 20 per second
-    flySprite.x -= (e.detail / timePerFrame) * 20;    
-  });
-
-  addUpdate((e) => {
-    //needs to move 20 per second
-    flySprite1.x -= (e.detail / timePerFrame) * 20;    
-  });
-  addUpdate((e) => {
-    //needs to move 20 per second
-    flySprite2.x -= (e.detail / timePerFrame) * 20;    
-  });
-  addUpdate((e) => {
-    //needs to move 20 per second
-    flySprite3.x -= (e.detail / timePerFrame) * 20;    
+  addUpdate(e => {
+    flySprites.map(sprite => {
+      //needs to move 20 per second
+      sprite.x -= (e.detail / timePerFrame) * 20;    
+    });
   });
 };
 
