@@ -23,7 +23,7 @@ class Track {
   }
   Update = () => {
     if (this.track[0] + this.marginOfError < beatMachine.GetBeat()) {
-      console.log("MISS!!!   " + this.track[0]);      
+      console.log("Missed without pressing a key!!!   " + this.track[0]);      
       this.track.shift();
     }
   };
@@ -41,6 +41,14 @@ class Track {
         this.hitSfx.play();
       }
       return true;
+    }
+    else {
+      targetBeat = targetBeat ? targetBeat : "Track ended!";
+      console.log("Hit missed!!!   " + targetBeat);
+      this.Events.emit("Miss", { detail: targetBeat });
+      if (this.track[0] + this.marginOfError < beatMachine.GetBeat()) {
+        this.track.shift();
+      }
     }
     return false;
   };

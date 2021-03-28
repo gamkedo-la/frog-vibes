@@ -67,6 +67,10 @@ track.Events.on("Hit", e => {
   });
 });
 
+track.Events.on("Miss", e => {  
+  console.log("Frog tongue stretched out, but nothing happened!");
+});
+
 // LESGOOOO
 export const Start = () => {
   track.Start();
