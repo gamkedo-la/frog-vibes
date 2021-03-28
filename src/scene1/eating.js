@@ -21,7 +21,7 @@ const TONGUE_EXTENDS_Y = 14;
 const TONGUE_EXTENDS_Y_SPEED = 6;
 spriteTongue.x = TONGUE_X;
 spriteTongue.y = TONGUE_Y;
-var isTongueStretched = false;
+var isTongueStretchedHit = false;
 
 // TONGUE BODY
 import tongueBody from "./img/frog_tongue_body.png";
@@ -47,9 +47,8 @@ const flySprites = [
   new Sprite(fly, 1, 1)
 ];
 
-const StretchTongueEatBug = bugSprite => {  
-  bugSprite.Stop();
-  isTongueStretched = true;
+const TongueStretchedHit = () => {    
+  isTongueStretchedHit = true;
   spriteTongue.reset();
   spritesTongueBody.map(spriteTongueBody => {
     spriteTongueBody.reset();
@@ -57,10 +56,12 @@ const StretchTongueEatBug = bugSprite => {
 };
 
 track.Events.on("Hit", e => {
+  TongueStretchedHit();
+
   let bugX = 10;
   flySprites.map((sprite, i, flySprites) => {
     if (e.detail == bugX) {
-      StretchTongueEatBug(sprite);
+      (sprite => sprite.Stop());
       flySprites[i].Stop();
     }
     bugX += 2;
@@ -88,14 +89,14 @@ export const Start = () => {
   });
 
   addUpdate(e => {
-    if (isTongueStretched && spriteTongue.y > TONGUE_EXTENDS_Y) {
+    if (isTongueStretchedHit && spriteTongue.y > TONGUE_EXTENDS_Y) {
       spriteTongue.y -= TONGUE_EXTENDS_Y_SPEED;
       spritesTongueBody.map(spriteTongueBody => {
         spriteTongueBody.y -= TONGUE_BODY_EXTENDS_Y_SPEED;
       });
     }
     else {
-      isTongueStretched = false;
+      isTongueStretchedHit = false;
       if (spriteTongue.y < TONGUE_Y) {
         spriteTongue.y += TONGUE_EXTENDS_Y_SPEED;
         spritesTongueBody.map(spriteTongueBody => {
