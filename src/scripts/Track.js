@@ -8,16 +8,20 @@ class Track {
   track = [];
   fullTrack = [];
   hitSfx = null;
+  missSfx = null;
   song = null;
   marginOfError = 0.5;
   Events = new EventChannel();
-  constructor(song, trackList, hitSfx = null) {
+  constructor(song, trackList, hitSfx = null, missSfx = null) {
     this.song = song;
     // //TODO: reverse & validate
     this.track = [...trackList];
     this.fullTrack = [...trackList];
     if (hitSfx) {
       this.hitSfx = new Audio(hitSfx);
+    }
+    if (missSfx) {
+      this.missSfx = new Audio(missSfx);
     }
     updateEvent.on("Update", this.Update);
   }
@@ -48,6 +52,9 @@ class Track {
       this.Events.emit("Miss", { detail: targetBeat });
       if (this.track[0] + this.marginOfError < beatMachine.GetBeat()) {
         this.track.shift();
+      }
+      if (this.missSfx != null && !Track.isMuted) {
+        this.missSfx.play();
       }
     }
     return false;
