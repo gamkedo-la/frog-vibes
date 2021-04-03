@@ -5,6 +5,7 @@ import { Lillypad } from "./lillypad";
 import { Grass } from "./grass";
 import { Water } from "./water";
 import { Pond } from "./pond";
+import { Yay } from "./yay";
 
 const debugme = true;
 
@@ -14,15 +15,17 @@ export const Start = () => {
 
 	if (debugme) console.log("starting pollywog scene!");
 	
-	track.Start();
+	track.Start(); // music
 	
-    let pond = new Pond();
+    let pond = new Pond(); // bg
+    
+    let yay = new Yay(); // text messages
 
-    for (let n=0; n<12; n++) {
+    for (let n=0; n<10; n++) {
         let splash = new Water();
     }
 
-	for (let n=0; n<20; n++) {
+	for (let n=0; n<16; n++) {
         let tad = new Pollywog();
     }
 	

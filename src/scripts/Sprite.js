@@ -26,16 +26,22 @@ export default class spriteClass {
   hasFinishedLoop = false;
   stopped = false;
 
-  constructor(path, col, row) {
+  constructor(path, col, row, fps) {
+
     this.spriteSheet.onload = this.onLoad;
     this.addImage(path, col, row);
     this.drawFrame = false;
+
+    // optionally overwrite the default animation speed
+    if (fps) this.timePerFrame = 1000 / fps; // ms
     this.timePerFrameSave = this.timePerFrame;
+
     this.animation["default"] = {
       startIndex: 0,
       totalFrames: this.columns * this.rows,
       speed: this.timePerFrame,
     };
+
     this.currentAnimation = "default";
     this.frameTotal = this.columns * this.rows;
     this.loopFrames = true;
@@ -43,12 +49,14 @@ export default class spriteClass {
     addDraw(this.draw);
     addUpdate(this.update);
   }
+  
   Stop() {
     this.stopped = true;
     removeDraw(this.draw);
     this.timePerFrame = 0;
     this.drawFrame = false;
   }
+  
   start() {
     this.stopped = false;
     addDraw(this.draw);
@@ -62,6 +70,7 @@ export default class spriteClass {
     this.rows = row;
     this.spriteSheet.src = path;
   }
+  
   setAnimation = (name) => {
     if (this.animation[name]) {
       this.currentAnimation = name;
@@ -71,6 +80,7 @@ export default class spriteClass {
       console.error(`aaay so like, there's no animation called ${name} registered`);
     }
   }
+  
   registerAnimation = (name, startIndex, totalFrames) => {
       this.animation[name] = {
         startIndex: startIndex,
@@ -79,6 +89,7 @@ export default class spriteClass {
       };
     console.log(`current anim: ${this.currentAnimation}`);
   }
+  
   onLoad = () => {
     this.frameWidth = this.spriteSheet.naturalWidth / this.columns;
     this.frameHeight = this.spriteSheet.naturalHeight / this.rows;
