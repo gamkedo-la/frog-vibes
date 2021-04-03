@@ -4,6 +4,7 @@ import { Pollywog } from "./pollywog";
 import { Lillypad } from "./lillypad";
 import { Grass } from "./grass";
 import { Water } from "./water";
+import { Pond } from "./pond";
 
 const debugme = true;
 
@@ -15,7 +16,9 @@ export const Start = () => {
 	
 	track.Start();
 	
-	for (let n=0; n<12; n++) {
+    let pond = new Pond();
+
+    for (let n=0; n<12; n++) {
         let splash = new Water();
     }
 
