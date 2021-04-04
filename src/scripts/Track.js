@@ -71,15 +71,20 @@ class Track {
     beatMachine.PlayTrack(this.song, 144);
     this.isRunning = true;
     this.isStarted = true;
-    // console.log(this.song);
   }
+
   Stop() {
     beatMachine.StopTrack();
     this.isRunning = false;
   }
+
   Continue() {
     beatMachine.ContinueTrack();
     this.isRunning = true;
+  }
+
+  static DebugSkip() {
+    beatMachine.currentTrack.currentTime = beatMachine.currentTrack.duration -2;
   }
   static ToggleMuteAll() {
     Track.isMuted = BeatMachine.ToggleMuteAllTracks();    

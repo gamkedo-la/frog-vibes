@@ -9,12 +9,15 @@ var timePerFrame = 416.66;
 
 // SCENE SPRITE
 import testimg2 from "./img/scene1sheeeeeet.png";
-const spriteThing = new Sprite(testimg2, 2, 4);
-spriteThing.Stop();
-spriteThing.registerAnimation("Idle", 2, 2);
-spriteThing.registerAnimation("Sad", 6, 1);
-spriteThing.registerAnimation("Happy", 4, 1);
+const spriteThing = new Sprite(testimg2, 4, 10);
+
+spriteThing.registerAnimation("Idle", 4, 2);
+spriteThing.registerAnimation("Sad", 12, 1);
+spriteThing.registerAnimation("Happy", 8, 1);
 spriteThing.setAnimation("Idle");
+spriteThing.Stop();
+
+import startScorePanel  from "../scorePanel/scorePanel.js";
 
 // TONGUE VALUES
 const TONGUE_X = 100;
@@ -122,18 +125,24 @@ track.Events.on("Miss", e => {
 //ending
 track.Events.on("Ended", (e) => {
   console.log("stuff has eneded!");
+    
   if (totalhits == 0) {
     track.missSfx.play();
     spriteThing.setAnimation("Sad");
   } else {
     spriteThing.setAnimation("Happy");
+
   }
+  //uhhh set a delay? or do some sort of sequence? 
+  setTimeout(() => { startScorePanel();}, 2000);
+  
 });
+
 // LESGOOOO
 export const Start = () => {
   track.Start();
-  
-  spriteThing.reset();  
+
+  spriteThing.reset();
   
   bugSprites.map(sprite => {
     sprite.reset();

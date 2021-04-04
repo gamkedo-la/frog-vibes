@@ -56,6 +56,10 @@ document.onkeydown = function (e) {
         console.log("All tracks unmuted!");
       }
     }
+    if (e.keyCode == 40) {
+      console.log("Debug Skip!!");
+      Track.DebugSkip();
+    }
   }
 
   if (!inScene) {

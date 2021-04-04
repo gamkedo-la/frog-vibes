@@ -136,7 +136,8 @@ export default class spriteClass {
   }
   setSpeed(newSpeed) {
     if (newSpeed > 0) {
-      this.timePerFrame = 1 / newSpeed;
+      this.timePerFrame = newSpeed;
+      this.timePerFrameSave = newSpeed;
     } else {
       this.timePerFrame = 0;
     }
