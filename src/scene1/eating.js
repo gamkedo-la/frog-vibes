@@ -17,7 +17,7 @@ spriteThing.registerAnimation("Happy", 8, 1);
 spriteThing.setAnimation("Idle");
 spriteThing.Stop();
 
-import startScorePanel  from "../scorePanel/scorePanel.js";
+import startScorePanel from "../scorePanel/scorepanel.js";
 
 // TONGUE VALUES
 const TONGUE_X = 100;
