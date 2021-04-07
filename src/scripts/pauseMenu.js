@@ -1,6 +1,7 @@
 import {pause, unpause} from "./mainLoop.js";
 import Sprite from "./Sprite";
 import {currentSceneNumber} from "./index";
+// import Input from "./Input";
 
 import {IsPaused as PauseScene1, IsUnPaused as UnPauseScene1} from "../scene1";
 import {IsPaused as PauseScene2, IsUnPaused as UnPauseScene2} from "../scene2";
@@ -10,6 +11,10 @@ import {IsPaused as PauseScene5, IsUnPaused as UnPauseScene5} from "../scene5";
 import {IsPaused as PauseScene6, IsUnPaused as UnPauseScene6} from "../scene6";
 
 import pauseImg from "../pauseMenu/pauseMenu.png";
+
+var canvas = document.getElementById("gameCanvas");
+var rect = canvas.getBoundingClientRect();
+var root = document.documentElement;
 
 var isEnabled = false;
 var isPaused = false;
@@ -45,27 +50,36 @@ function handlePauseButton() {
 
                 // I game is not paused, then pause it
                 if (!isPaused) {
-                    // Then I want to display the UI.
-                    displayUI();
-
-                    // If it is pressed I want to stop the main loop
-                    pause();
-                    scenes[currentSceneNumber].pauseTrack();
-
-                    isPaused = true;
+                    pauseGame();
+                    // console.log(Input.mouseCanvasX);
                 }
                 else{
-                    // I remove the pause UI
-                    pauseSprite.Stop();
-
-                    // I restart the game
-                    unpause();
-                    scenes[currentSceneNumber].unPauseTrack();
-                    
-                    isPaused = false;
+                    unPauseGame();
                 }
             }
         }, false);
+}
+
+function unPauseGame() {
+    // I remove the pause UI
+    pauseSprite.Stop();
+
+    // I restart the game
+    unpause();
+    scenes[currentSceneNumber].unPauseTrack();
+
+    isPaused = false;
+}
+
+function pauseGame() {
+    // Then I want to display the UI.
+    displayUI();
+
+    // If it is pressed I want to stop the main loop
+    pause();
+    scenes[currentSceneNumber].pauseTrack();
+
+    isPaused = true;
 }
 
 function init() {
@@ -80,11 +94,31 @@ function handleUnPause() {
 
 // import pauseMenu from "../pauseMenu/"
 // When I pause the game I want to see some UI.
-// On the UI I want there to be a button to unpause.
 function displayUI() {
     if (!isEnabled) { return; }
 
     pauseSprite = new Sprite(pauseImg, 1, 1);
+
+    // On the UI I want there to be a button to unpause.
+    canvas.addEventListener("mousemove", function (evt) {
+    
+        if (isPaused)
+        {   
+            var mouseX = evt.clientX - rect.left - root.scrollLeft;
+            var mouseY = evt.clientY - rect.top - root.scrollTop;
+    
+            var mouseCanvasX = Math.floor(mouseX * (canvas.width/canvas.clientWidth));
+            var mouseCanvasY = Math.floor(mouseY * (canvas.height/canvas.clientHeight));
+
+            if (mouseCanvasX > 100 && mouseCanvasX < 220 &&
+                mouseCanvasY > 45 && mouseCanvasY < 75){
+                    console.log('I am on the button, that\'s a frog life!');
+                    console.log('Mouse move: screen='+mouseX+','+mouseY+' canvas='+mouseCanvasX+','+mouseCanvasY);
+                }
+        }
+    }, false);
+
+
 }
 
 var pauseSprite = null;
