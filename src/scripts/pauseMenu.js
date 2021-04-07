@@ -11,6 +11,8 @@ import {IsPaused as PauseScene5, IsUnPaused as UnPauseScene5} from "../scene5";
 import {IsPaused as PauseScene6, IsUnPaused as UnPauseScene6} from "../scene6";
 
 import pauseImg from "../pauseMenu/pauseMenu.png";
+import unPauseButtonImg from "../pauseMenu/unPauseButton.png";
+import unPauseButtonImgHighlighted from "../pauseMenu/unPauseButton_highlighted.png";
 
 var canvas = document.getElementById("gameCanvas");
 var rect = canvas.getBoundingClientRect();
@@ -73,6 +75,7 @@ function handlePauseButton(evt) {
 function unPauseGame() {
     // I remove the pause UI
     pauseSprite.Stop();
+    unPauseButtonSprite.Stop();
 
     // I restart the game
     unpause();
@@ -98,6 +101,8 @@ function displayUI() {
     if (!isEnabled) { return; }
 
     pauseSprite = new Sprite(pauseImg, 1, 1);
+    unPauseButtonSprite = new Sprite(unPauseButtonImg, 1, 1); 
+
 }
 
 function handleMousePosition(evt) {
@@ -111,10 +116,19 @@ function handleMousePosition(evt) {
 
     if (mouseCanvasX > 100 && mouseCanvasX < 220 &&
         mouseCanvasY > 45 && mouseCanvasY < 75){
-            isMouseOnUnPauseButton = true;
+            if (!isMouseOnUnPauseButton) {
+                isMouseOnUnPauseButton = true;
+
+                // Highlight the button
+                unPauseButtonSprite.addImage(unPauseButtonImgHighlighted, 1, 1); 
+            }
+            
     }
-    else{
+    else if (isMouseOnUnPauseButton){
         isMouseOnUnPauseButton = false;
+
+        // Un-Highlight the button
+        unPauseButtonSprite.addImage(unPauseButtonImg, 1, 1); 
     }
 }
 
@@ -128,5 +142,6 @@ function handleMouseClick(evt) {
 }
 
 var pauseSprite = null;
+var unPauseButtonSprite = null;
 
 export default {enable, disable, init};
