@@ -19,6 +19,8 @@ var root = document.documentElement;
 var isEnabled = false;
 var isPaused = false;
 
+var isMouseOnUnPauseButton = false;
+
 var scenes = [
     {},
     {pauseTrack:PauseScene1, unPauseTrack:UnPauseScene1},
@@ -39,25 +41,33 @@ function disable () {
     isEnabled = false;
 }
 
+function init() {
+    document.addEventListener("keydown", 
+        function(evt) { handlePauseButton(evt) }, false);
+
+    document.addEventListener("mousedown",
+        function(evt) { handleMouseClick(evt) }, false);
+
+    canvas.addEventListener("mousemove", 
+        function(evt) { handleMousePosition(evt) }, false);
+}
+
 // I want to be able to press a button and pause the game.
-function handlePauseButton() {
+function handlePauseButton(evt) {
+    if (!isEnabled) { return; }
 
-    document.addEventListener("keydown", function (e) {
-            if (!isEnabled) { return; }
+    // I want to check if the button is pressed
+    if (evt.key == "Escape") {
 
-            // I want to check if the button is pressed
-            if (e.key == "Escape") {
-
-                // I game is not paused, then pause it
-                if (!isPaused) {
-                    pauseGame();
-                    // console.log(Input.mouseCanvasX);
-                }
-                else{
-                    unPauseGame();
-                }
-            }
-        }, false);
+        // I game is not paused, then pause it
+        if (!isPaused) {
+            pauseGame();
+            // console.log(Input.mouseCanvasX);
+        }
+        else{
+            unPauseGame();
+        }
+    }
 }
 
 function unPauseGame() {
@@ -82,43 +92,39 @@ function pauseGame() {
     isPaused = true;
 }
 
-function init() {
-    handlePauseButton();
-}
-
-// When I click on the unpause button, the game continues and the UI goes away.
-function handleUnPause() {
-    if (!isEnabled) { return; }
-
-}
-
 // import pauseMenu from "../pauseMenu/"
 // When I pause the game I want to see some UI.
 function displayUI() {
     if (!isEnabled) { return; }
 
     pauseSprite = new Sprite(pauseImg, 1, 1);
+}
 
-    // On the UI I want there to be a button to unpause.
-    canvas.addEventListener("mousemove", function (evt) {
+function handleMousePosition(evt) {
+    if (!isEnabled || !isPaused) { return; }
+
+    var mouseX = evt.clientX - rect.left - root.scrollLeft;
+    var mouseY = evt.clientY - rect.top - root.scrollTop;
+
+    var mouseCanvasX = Math.floor(mouseX * (canvas.width/canvas.clientWidth));
+    var mouseCanvasY = Math.floor(mouseY * (canvas.height/canvas.clientHeight));
+
+    if (mouseCanvasX > 100 && mouseCanvasX < 220 &&
+        mouseCanvasY > 45 && mouseCanvasY < 75){
+            isMouseOnUnPauseButton = true;
+    }
+    else{
+        isMouseOnUnPauseButton = false;
+    }
+}
+
+function handleMouseClick(evt) {
+    if (!isEnabled || !isPaused || evt.button != 0) { return; }
     
-        if (isPaused)
-        {   
-            var mouseX = evt.clientX - rect.left - root.scrollLeft;
-            var mouseY = evt.clientY - rect.top - root.scrollTop;
-    
-            var mouseCanvasX = Math.floor(mouseX * (canvas.width/canvas.clientWidth));
-            var mouseCanvasY = Math.floor(mouseY * (canvas.height/canvas.clientHeight));
-
-            if (mouseCanvasX > 100 && mouseCanvasX < 220 &&
-                mouseCanvasY > 45 && mouseCanvasY < 75){
-                    console.log('I am on the button, that\'s a frog life!');
-                    console.log('Mouse move: screen='+mouseX+','+mouseY+' canvas='+mouseCanvasX+','+mouseCanvasY);
-                }
-        }
-    }, false);
-
-
+    // When I click on the unpause button, the game continues and the UI goes away.
+    if (isMouseOnUnPauseButton) {
+        unPauseGame();
+    }
 }
 
 var pauseSprite = null;
