@@ -12,14 +12,14 @@ export class Water {
     constructor() {
         this.spr = new Sprite(waterSprite, 1, 1);
         this.spawnY = -32+Math.random()*128;
-        this.speed = -Math.random();
+        this.speed = -Math.random()/2-0.1;
         this.spr.x = -640 + Math.random()*1280;
         this.spr.y = this.spawnY;
         addUpdate(this.update);
     }
 
     update = () => {
-		this.speed -= 0.01; // grow stronger over time
+		//this.speed -= 0.01; // grow stronger over time
         this.spr.x += this.speed; // move
         this.spr.y = this.spawnY + Math.cos(this.spr.x/40)*4; // wobble
         if (this.spr.x > 640) this.spr.x = -640; // wrap

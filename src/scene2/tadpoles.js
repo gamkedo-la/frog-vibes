@@ -10,6 +10,7 @@ import { Yay } from "./yay";
 const debugme = true;
 
 let track = new Track("public/audio/pollywogsong.wav", [2, 4, 6, 8, 10, 12, 14, 16]);
+let everyone = [];
 
 export const Start = () => { 
 
@@ -21,19 +22,20 @@ export const Start = () => {
     
     let yay = new Yay(); // text messages
 
-    for (let n=0; n<10; n++) {
+    for (let n=0; n<16; n++) {
         let splash = new Water();
     }
 
 	for (let n=0; n<16; n++) {
         let tad = new Pollywog();
+        everyone.push(tad);
     }
 	
-	for (let n=0; n<6; n++) {
+	for (let n=0; n<12; n++) {
         let pad = new Lillypad();
     }
 
-	for (let n=0; n<6; n++) {
+	for (let n=0; n<12; n++) {
         let sprig = new Grass();
     }
 };
@@ -46,6 +48,27 @@ export const IsPaused = () => {
     track.Stop();
   };
   
-  export const IsUnPaused = () => {
+export const IsUnPaused = () => {
     track.Continue();
-  };
+};
+
+var totalhits = 0;
+// good timing - success
+track.Events.on("Hit", e => {
+    console.log("HIT #" + totalhits);
+    totalhits += 1;
+    // everyone gets a speed boost!
+    for (let n=0; n<everyone.length; n++) {
+        everyone[n].speed += Math.random() * 0.1;
+    }    
+});
+
+// off beat - fail
+track.Events.on("Miss", e => {  
+    console.log("MISS!");
+});
+
+//ending
+track.Events.on("Ended", (e) => {
+    console.log("track has eneded!");
+});
