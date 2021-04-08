@@ -22,20 +22,21 @@ export const Start = () => {
     
     let yay = new Yay(); // text messages
 
-    for (let n=0; n<16; n++) {
-        let splash = new Water();
-    }
+    // these don't look all that great - removed
+    //for (let n=0; n<16; n++) {
+    //    let splash = new Water();
+    //}
 
 	for (let n=0; n<16; n++) {
         let tad = new Pollywog();
         everyone.push(tad);
     }
 	
-	for (let n=0; n<12; n++) {
+	for (let n=0; n<16; n++) {
         let pad = new Lillypad();
     }
 
-	for (let n=0; n<12; n++) {
+	for (let n=0; n<20; n++) {
         let sprig = new Grass();
     }
 };
