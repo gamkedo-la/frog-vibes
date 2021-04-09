@@ -9,7 +9,7 @@ import { Yay } from "./yay";
 
 const debugme = true;
 
-let track = new Track("public/audio/pollywogsong.wav", [2, 4, 6, 8, 10, 12, 14, 16]);
+let track = new Track("public/audio/pollywogsong.wav", [10, 12, 14, 16, 26, 28, 30, 32, 43, 45, 47, 49],"public/audio/scene01/ohno.wav");
 let everyone = [];
 
 export const Start = () => { 
@@ -58,18 +58,29 @@ var totalhits = 0;
 track.Events.on("Hit", e => {
     console.log("HIT #" + totalhits);
     totalhits += 1;
-    // everyone gets a speed boost!
+    // everyone gets a HuGE speed boost!
     for (let n=0; n<everyone.length; n++) {
-        everyone[n].speed += Math.random() * 0.1;
+        everyone[n].speed += Math.random() * 4.0;
     }    
 });
 
 // off beat - fail
 track.Events.on("Miss", e => {  
     console.log("MISS!");
+    // everyone gets a SMALL speed boost ANYWAYS!!!! LOLOLOL
+    for (let n=0; n<everyone.length; n++) {
+        everyone[n].speed += Math.random() * 1.0;
+    }       
 });
 
 //ending
 track.Events.on("Ended", (e) => {
-    console.log("track has eneded!");
+    console.log("track has ended!");
+    if (totalhits == 0) {
+        console.log("You missed every beat!");
+        if (track.missSfx) track.missSfx.play();
+    } else {
+        console.log("You did great!");
+    }
+    setTimeout(() => { startScorePanel();}, 2000);
 });
