@@ -13,6 +13,10 @@ function drawBitmapCenteredWithRotation(useBitmap, atX, atY, withAng) {
   ctx.restore();
 }
 
+export const colorBlank = (fillColor) => {
+  colorRect(0,0,canvas.width,canvas.height,fillColor);
+}
+
 function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
   ctx.fillStyle = fillColor;
   ctx.fillRect(topLeftX, topLeftY, boxWidth, boxHeight);

@@ -9,12 +9,14 @@ import {Start as StartScene6, IsHit as IsHitScene6} from "../scene6";
 
 import graphics from "./graphicscommon";
 import { Start as StartMainLoop } from "./mainLoop";
+import { ToggleCredits as SwitchCredits } from "./mainLoop";
 import Track from "./Track";
 import pauseMenu from "./pauseMenu";
 import Sprite from "./Sprite";
 
 var hasStarted = false;
 var inScene = false;
+var showCredits = false;
 
 export var currentSceneNumber = 1;
 
@@ -41,7 +43,18 @@ StartMainLoop();
 document.onkeydown = function (e) {
   console.log('keydown:'+e.keyCode);
   
+  if(showCredits) {
+    showCredits = false;
+    SwitchCredits();
+    return;
+  }
+
   if (!hasStarted) {
+    if (e.keyCode == 67) { // key 'C' to toggle credits
+        showCredits = true;
+        SwitchCredits();
+        return;
+    }
     console.log("Stopping Splash");
     hasStarted = true;    
     splashScreen.Stop();

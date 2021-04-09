@@ -2,12 +2,20 @@ import EventChannel from "./EventChannel";
 var started = false;
 import { run as runGraphics } from "./graphicscommon";
 
+import { colorBlank as drawColor } from "./graphicscommon";
+import { colorText as drawText } from "./graphicscommon";
+
 export const updateEvent = new EventChannel();
 
 export const Start = () => {
   if (started) return;
   window.requestAnimationFrame(loop);
   started = true;
+};
+
+var creditsDisplay = false;
+export const ToggleCredits = () => {
+  creditsDisplay = !creditsDisplay;
 };
 
 export const pause = () => {
@@ -27,6 +35,10 @@ function update(progress) {
 function draw() {
   // Draw the state of the world
   runGraphics();
+  if(creditsDisplay) {
+    drawColor("blue");
+    // drawText("bill", 50,50, "white");
+  }
 }
 
 function loop(timestamp) {
