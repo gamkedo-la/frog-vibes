@@ -17,6 +17,13 @@ export const colorBlank = (fillColor) => {
   colorRect(0,0,canvas.width,canvas.height,fillColor);
 }
 
+export const creditsText = (startX,startY,stringList) => {
+  let skipY = 10;
+  for(let i=0; i<stringList.length; i++) {
+    colorText(stringList[i],startX, startY+i*skipY, "white");
+  }
+}
+
 function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
   ctx.fillStyle = fillColor;
   ctx.fillRect(topLeftX, topLeftY, boxWidth, boxHeight);
