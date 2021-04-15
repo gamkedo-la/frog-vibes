@@ -4,7 +4,7 @@ import Track from "../scripts/Track";
 import { addUpdate } from "../scripts/mainLoop";
 
 //AUDIO
-var track = new Track("public/audio/track1.wav", [10, 12, 14, 16, 26, 28, 30, 32, 43, 45, 47, 49], "public/audio/scene01/kerop.wav", "public/audio/scene01/ohno.wav");
+var track = new Track("public/Audio/track1.wav", [10, 12, 14, 16, 26, 28, 30, 32, 43, 45, 47, 49], "public/Audio/scene01/kerop.wav", "public/Audio/scene01/ohno.wav");
 var timePerFrame = 416.66;
 
 // SCENE SPRITE

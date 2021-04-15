@@ -3,7 +3,7 @@ import testimg from "./img/testframe.png";
 
 import Track from "../scripts/Track";
 console.log(testimg);
-var track = new Track("public/audio/track1.wav", [10, 12, 14, 16]);
+var track = new Track("public/Audio/track1.wav", [10, 12, 14, 16]);
 
 
 export const Start = () => {

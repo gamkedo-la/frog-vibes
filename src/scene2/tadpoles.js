@@ -9,7 +9,7 @@ import { Yay } from "./yay";
 
 const debugme = true;
 
-let track = new Track("public/audio/pollywogsong.wav", [10, 12, 14, 16, 26, 28, 30, 32, 43, 45, 47, 49],"public/audio/scene01/ohno.wav");
+let track = new Track("public/Audio/pollywogsong.wav", [10, 12, 14, 16, 26, 28, 30, 32, 43, 45, 47, 49],"public/Audio/scene01/ohno.wav");
 let everyone = [];
 
 export const Start = () => { 
