@@ -8,8 +8,8 @@ var track = new Track("public/audio/track1.wav", [10, 12, 14, 16, 26, 28, 30, 32
 var timePerFrame = 416.66;
 
 // SCENE SPRITE
-import testimg2 from "./img/scene1sheeeeeet.png";
-const spriteThing = new Sprite(testimg2, 4, 10);
+import testimg2 from "./img/scene1sheeeeeet2.png";
+const spriteThing = new Sprite(testimg2, 40, 1);
 
 spriteThing.registerAnimation("Idle", 4, 2);
 spriteThing.registerAnimation("Sad", 12, 1);
@@ -69,19 +69,22 @@ InitTongueBody(spritesTongueMissBody);
 // BUG SPRITES
 import fly from "./img/fly.png";
 import bee from "./img/bee.png";
+import boot from "./img/boot.png";
 const bugSprites = [
-  new Sprite(fly, 1, 1),
+  new Sprite(fly, 2, 1),
   new Sprite(bee, 2, 1),
-  new Sprite(fly, 1, 1),
-  new Sprite(fly, 1, 1),
-  new Sprite(fly, 1, 1),
-  new Sprite(fly, 1, 1),
-  new Sprite(fly, 1, 1),
-  new Sprite(fly, 1, 1),
-  new Sprite(fly, 1, 1),
-  new Sprite(fly, 1, 1),
-  new Sprite(fly, 1, 1),
-  new Sprite(fly, 1, 1),
+  new Sprite(fly, 2, 1),
+  new Sprite(boot, 2, 1),
+
+  new Sprite(fly, 2, 1),
+  new Sprite(fly, 2, 1),
+  new Sprite(bee, 2, 1),
+  new Sprite(fly, 2, 1),
+
+  new Sprite(boot, 2, 1),
+  new Sprite(bee, 2, 1),
+  new Sprite(bee, 2, 1),
+  new Sprite(fly, 2, 1),
 ];
 bugSprites.map(bugSprite => {
   bugSprite.Stop();
