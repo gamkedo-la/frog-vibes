@@ -25,3 +25,6 @@ const startScorePanel = () => {
   letters.setSpeed(120);
 };
 export default startScorePanel;
+
+//need to tally up score and display results on scorepanel
+//need to add a mouse or keypress event to exit scorepanel and return to splash
