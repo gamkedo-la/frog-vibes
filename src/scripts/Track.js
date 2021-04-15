@@ -29,7 +29,7 @@ class Track {
   }
   Update = () => {
     if (this.track[0] + this.marginOfError < beatMachine.GetBeat()) {
-      console.log("Missed without pressing a key!!!   " + this.track[0]);      
+      // console.log("Missed without pressing a key!!!   " + this.track[0]);      
       this.track.shift();
     }
     if (this.isStarted && this.isRunning) {
@@ -46,7 +46,7 @@ class Track {
       beat > targetBeat - this.marginOfError &&
       beat < targetBeat + this.marginOfError
     ) {
-      console.log("Hit!!!   " + targetBeat);
+      // console.log("Hit!!!   " + targetBeat);
       this.Events.emit("Hit", { detail: targetBeat });
       this.track.shift();
       if (this.hitSfx != null && !Track.isMuted) {
@@ -56,7 +56,7 @@ class Track {
     }
     else {
       targetBeat = targetBeat ? targetBeat : "Track ended!";
-      console.log("Hit missed!!!   " + targetBeat);
+      // console.log("Hit missed!!!   " + targetBeat);
       this.Events.emit("Miss", { detail: targetBeat });
       if (this.track[0] + this.marginOfError < beatMachine.GetBeat()) {
         this.track.shift();

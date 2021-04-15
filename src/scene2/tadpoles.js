@@ -7,7 +7,7 @@ import { Water } from "./water";
 import { Pond } from "./pond";
 import { Yay } from "./yay";
 
-const debugme = true;
+const debugme = false;
 
 let track = new Track("public/Audio/pollywogsong.wav", [10, 12, 14, 16, 26, 28, 30, 32, 43, 45, 47, 49],"public/Audio/scene01/ohno.wav");
 let everyone = [];
@@ -56,7 +56,7 @@ export const IsUnPaused = () => {
 var totalhits = 0;
 // good timing - success
 track.Events.on("Hit", e => {
-    console.log("HIT #" + totalhits);
+    // console.log("HIT #" + totalhits);
     totalhits += 1;
     // everyone gets a HuGE speed boost!
     for (let n=0; n<everyone.length; n++) {
@@ -66,7 +66,7 @@ track.Events.on("Hit", e => {
 
 // off beat - fail
 track.Events.on("Miss", e => {  
-    console.log("MISS!");
+    // console.log("MISS!");
     // everyone gets a SMALL speed boost ANYWAYS!!!! LOLOLOL
     for (let n=0; n<everyone.length; n++) {
         everyone[n].speed += Math.random() * 1.0;
@@ -75,12 +75,12 @@ track.Events.on("Miss", e => {
 
 //ending
 track.Events.on("Ended", (e) => {
-    console.log("track has ended!");
+    // console.log("track has ended!");
     if (totalhits == 0) {
-        console.log("You missed every beat!");
+        // console.log("You missed every beat!");
         if (track.missSfx) track.missSfx.play();
     } else {
-        console.log("You did great!");
+        // console.log("You did great!");
     }
     setTimeout(() => { startScorePanel();}, 2000);
 });

@@ -123,11 +123,11 @@ track.Events.on("Hit", e => {
 
 track.Events.on("Miss", e => {  
   TongueStretchedHit(false);
-  console.log("Frog tongue stretched out, but nothing happened!");
+  // console.log("Frog tongue stretched out, but nothing happened!");
 });
 //ending
 track.Events.on("Ended", (e) => {
-  console.log("stuff has eneded!");
+  // console.log("stuff has eneded!");
     
   if (totalhits == 0) {
     track.missSfx.play();

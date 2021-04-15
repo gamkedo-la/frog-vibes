@@ -87,13 +87,13 @@ export default class spriteClass {
         totalFrames: totalFrames,
         speed: this.timePerFrame,
       };
-    console.log(`current anim: ${this.currentAnimation}`);
+    // console.log(`current anim: ${this.currentAnimation}`);
   }
   
   onLoad = () => {
     this.frameWidth = this.spriteSheet.naturalWidth / this.columns;
     this.frameHeight = this.spriteSheet.naturalHeight / this.rows;
-    console.log(`current anim: ${this.currentAnimation}`);
+    // console.log(`current anim: ${this.currentAnimation}`);
 
     if (!this.stopped) {
       this.reset();

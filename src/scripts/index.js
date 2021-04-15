@@ -41,7 +41,7 @@ const splashScreen = new Sprite(splashImg, 1, 1);
 StartMainLoop();
 
 document.onkeydown = function (e) {
-  console.log('keydown:'+e.keyCode);
+  // console.log('keydown:'+e.keyCode);
   
   if(showCredits) {
     showCredits = false;
@@ -95,4 +95,7 @@ document.onkeydown = function (e) {
   // otherwise, assume keypress was gameplay input  
   scenes[currentSceneNumber].hit();
   
+  // bit brutal last minute fix, but other preventDefault location wasn't picking up,
+  // causing game to scroll on itch when spacebar was pressed, so, catching all for now
+  e.preventDefault();
 };

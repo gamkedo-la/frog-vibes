@@ -9,15 +9,15 @@ import testimg2 from "../scene1/img/scene1sheeeeeet2.png";
 // letters.Stop();
 
 const startScorePanel = () => {
-  console.log("Hodor");
-  const panel = new Sprite(testimg2, 40, 1);
+  // console.log("Hodor");
+  /*const panel = new Sprite(testimg2, 40, 1);
   panel.registerAnimation("derp", 36, 2);
   panel.setAnimation("derp");
 
   const numbers = new Sprite(testimg2, 40, 1);
   numbers.registerAnimation("derp", 16, 10);
   numbers.setAnimation("derp");
-  numbers.setSpeed(120);
+  numbers.setSpeed(120);*/
 
   const letters = new Sprite(testimg2, 40, 1);
   letters.registerAnimation("derp", 28, 4);
