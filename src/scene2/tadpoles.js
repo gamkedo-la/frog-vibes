@@ -21,6 +21,15 @@ var tadpoleRoundSummaryDelay = 50; // previously 2000, seemed awkwardly long
 let track = new Track("public/Audio/pollywogsong.wav", [10, 12, 14, 16, 26, 28, 30, 32, 43, 45, 47, 49],"public/Audio/scene01/ohno.wav");
 let everyone = [];
 
+export const Stop = () => {
+
+  // NOTE: not used! instead just doing a location.reload() from mouseup in scorepanel
+
+  console.log("undo tadpole!");
+  everyone = [];
+  track.Stop();
+}
+
 export const Start = () => { 
 
 	if (debugme) console.log("starting pollywog scene!");

@@ -148,6 +148,10 @@ track.Events.on("Ended", (e) => {
   
 });
 
+// NOTE: not used, instead just doing a location.reload() from mouseup in scorepanel
+export const Stop = () => {
+  console.log("undo frog!");
+}
 
 // LESGOOOO
 export const Start = () => {

@@ -14,6 +14,9 @@ const startScorePanel = () => {
   panel.registerAnimation("derp", 36, 2);
   panel.setAnimation("derp");
 
+  document.addEventListener("mouseup",
+      function(e) { location.reload(); } ); // sledgehammer restart, no state to keep, easier than full reinitialization
+
   /*const numbers = new Sprite(testimg2, 40, 1);
   numbers.registerAnimation("derp", 16, 10);
   numbers.setAnimation("derp");

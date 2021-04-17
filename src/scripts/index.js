@@ -1,11 +1,7 @@
 import "../styles/index.scss";
 
-import {Start as StartScene1, IsHit as IsHitScene1} from "../scene1";
-import {Start as StartScene2, IsHit as IsHitScene2} from "../scene2";
-/*import {Start as StartScene3, IsHit as IsHitScene3} from "../scene3";
-import {Start as StartScene4, IsHit as IsHitScene4} from "../scene4";
-import {Start as StartScene5, IsHit as IsHitScene5} from "../scene5";
-import {Start as StartScene6, IsHit as IsHitScene6} from "../scene6";*/
+import {Start as StartScene1, IsHit as IsHitScene1, Stop as StopScene1} from "../scene1";
+import {Start as StartScene2, IsHit as IsHitScene2, Stop as StopScene2} from "../scene2";
 
 import graphics from "./graphicscommon";
 import { Start as StartMainLoop } from "./mainLoop";
@@ -31,8 +27,8 @@ export var currentSceneNumber = 1;
 
 var scenes = [
   {},
-  {start:StartScene1,hit:IsHitScene1},
-  {start:StartScene2,hit:IsHitScene2},
+  {start:StartScene1,hit:IsHitScene1,stop:StopScene1},
+  {start:StartScene2,hit:IsHitScene2,stop:StopScene2},
   /*{start:StartScene3,hit:IsHitScene3},
   {start:StartScene4,hit:IsHitScene4},
   {start:StartScene5,hit:IsHitScene5},
@@ -78,7 +74,6 @@ document.onkeydown = function (e) {
     } else if (startLevel < 0) {
       return; // ignore, invalid input
     }
-    console.log("Stopping Splash");
     hasStarted = true;    
     splashScreen.Stop();
   }
