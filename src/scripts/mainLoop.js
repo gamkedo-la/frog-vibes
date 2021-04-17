@@ -33,15 +33,15 @@ function update(progress) {
 }
 
 let creditsList = [
-"PRESS ANY KEY TO RETURN",
-" ",
-        "ClayTaeto: Project lead, frog images, core functionality, animation loading system, scene diagrams, color palette, fly and bee logic, score panel",
+"                        == PRESS ANY KEY TO RETURN == ",
+"ClayTaeto: Project lead, frog images, core functionality, animation loading system, scene diagrams, color palette, fly and bee logic, score panel",
 "Jeff \"Axphin\" Hanlon: 2 looping songs, joke bug boot animation, frog design update, graphic item separation (art pipeline), font selection and related integration, fly sprite animation, continue button art",
 "Randy Tan Shaoxian: Mute toggle, frog tongue tuning, fly eating and miss sounds, tongue changes based on collision, additional minor bug fixes",
 "Christer \"McFunkypants\" Kaitila: Tadpole scene (plus related art, functionality), victory voice sound",
 "Charlene A.: Bee animation sprite, case sensitive compatibility fix",
 "Ian Cherabier: Pause menu and related art/functionality",
-"Clemens Reil: Practice commit"];
+"Clemens Reil: Practice commit",
+"Chris DeLeon: Compiled credits, assorted final fixes"];
 let creditsMaxCharWidthToWrap = 68;
 
 function wrapCredits() { // note: gets calling immediately after definition
@@ -72,7 +72,7 @@ function draw() {
   runGraphics();
   if(creditsDisplay) {
     drawColor("blue");
-    drawCredits(7,15, creditsList);
+    drawCredits(10,14, creditsList);
   }
 }
 
