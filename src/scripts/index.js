@@ -14,6 +14,15 @@ import Track from "./Track";
 import pauseMenu from "./pauseMenu";
 import Sprite from "./Sprite";
 
+const KEY_SPACE = 32;
+const KEY_DOWNARROW = 40;
+const KEY_C = 67;
+const KEY_M = 77;
+const KEY_1_ROW = 49;
+const KEY_1_PAD = 97;
+const KEY_2_ROW = 50;
+const KEY_2_PAD = 98;
+
 var hasStarted = false;
 var inScene = false;
 var showCredits = false;
@@ -41,10 +50,10 @@ const splashScreen = new Sprite(splashImg, 1, 1);
 StartMainLoop();
 
 function levelStartForKey(keyCode) {
-  if(keyCode == 49 || keyCode == 97) { // 1 in alpha row or numpad
+  if(keyCode == KEY_1_ROW || keyCode == KEY_1_PAD) {
     return 1;
   }
-  if(keyCode == 50 || keyCode == 98) {  // 2 in alpha row or numpad
+  if(keyCode == KEY_2_ROW || keyCode == KEY_2_PAD) {
     return 2;
   }
   return -1;
@@ -59,12 +68,14 @@ document.onkeydown = function (e) {
     return;
   }
 
+  var startLevel = levelStartForKey(e.keyCode);
+
   if (!hasStarted) {
-    if (e.keyCode == 67) { // key 'C' to toggle credits
+    if (e.keyCode == KEY_C) {
         showCredits = true;
         SwitchCredits();
         return;
-    } else if (levelStartForKey(e.keyCode) < 0) {
+    } else if (startLevel < 0) {
       return; // ignore, invalid input
     }
     console.log("Stopping Splash");
@@ -73,7 +84,7 @@ document.onkeydown = function (e) {
   }
 
   if (hasStarted && inScene) {
-    if (e.keyCode == 77) { // key 'M' to toggle mute on all tracks
+    if (e.keyCode == KEY_M) {
       if (Track.ToggleMuteAll()) {
         console.log("All tracks muted!");
       }
@@ -81,15 +92,14 @@ document.onkeydown = function (e) {
         console.log("All tracks unmuted!");
       }
     }
-    if (e.keyCode == 40) {
+    if (e.keyCode == KEY_DOWNARROW) {
       console.log("Debug Skip!!");
       Track.DebugSkip();
     }
   }
 
   if (!inScene) {
-    var startLevel = levelStartForKey(e.keyCode);
-    if (startLevel >= 0) { // pressed 1 or 2?
+    if (startLevel >= 0) {
       currentSceneNumber = startLevel;
     } else {
       return; // ignore, invalid input
@@ -105,7 +115,7 @@ document.onkeydown = function (e) {
 
   }
 
-  if(e.keyCode == 32) { // SPACE, gameplay input
+  if(e.keyCode == KEY_SPACE) { // SPACE, gameplay input
     scenes[currentSceneNumber].hit();
   }
   
