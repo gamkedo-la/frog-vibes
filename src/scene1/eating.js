@@ -3,6 +3,13 @@ import Sprite from "../scripts/Sprite";
 import Track from "../scripts/Track";
 import { addUpdate } from "../scripts/mainLoop";
 
+var DEBUG_INSTANT_END_ROUND_FROG = false;
+if(DEBUG_INSTANT_END_ROUND_FROG) {
+  console.log("WARNING: DEBUG_INSTANT_END_ROUND_FROG is TRUE in frog game eating.js");
+}
+
+var frogRoundSummaryDelay = 50; // previously 2000, seemed awkwardly long
+
 //AUDIO
 var track = new Track("public/Audio/track1.wav", [10, 12, 14, 16, 26, 28, 30, 32, 43, 45, 47, 49], "public/Audio/scene01/kerop.wav", "public/Audio/scene01/ohno.wav");
 var timePerFrame = 416.66;
@@ -137,13 +144,18 @@ track.Events.on("Ended", (e) => {
 
   }
   //uhhh set a delay? or do some sort of sequence? 
-  setTimeout(() => { startScorePanel();}, 2000);
+  setTimeout(() => { startScorePanel();}, frogRoundSummaryDelay);
   
 });
 
+
 // LESGOOOO
 export const Start = () => {
-  track.Start();
+  if(DEBUG_INSTANT_END_ROUND_FROG) {
+    track.Events.emit("Ended", { detail: "bwaap bwaaaaaa" });
+  } else {
+    track.Start();
+  }
 
   spriteThing.reset();
   
