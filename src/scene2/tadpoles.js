@@ -16,7 +16,7 @@ if(DEBUG_INSTANT_END_ROUND_TADPOLE) {
   console.log("WARNING: DEBUG_INSTANT_END_ROUND_TADPOLE is TRUE in tadpoles.js");
 }
 
-var tadpoleRoundSummaryDelay = 50; // previously 2000, seemed awkwardly long
+var tadpoleRoundSummaryDelay = 50; // previously 2000, no big pose to reveal here like in the frog level
 
 let track = new Track("public/Audio/pollywogsong.wav", [10, 12, 14, 16, 26, 28, 30, 32, 43, 45, 47, 49],"public/Audio/scene01/ohno.wav");
 let everyone = [];
