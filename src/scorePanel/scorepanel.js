@@ -8,7 +8,13 @@ import testimg2 from "../scene1/img/scene1sheeeeeet2.png";
 // const letters = new Sprite(testimg2, 4, 10);
 // letters.Stop();
 
+let showingPanel = false;
+export const isShowingScorePanel = () => {
+  return showingPanel;
+}
+
 const startScorePanel = () => {
+  showingPanel = true;
   // console.log("Hodor");
   const panel = new Sprite(testimg2, 40, 1);
   panel.registerAnimation("derp", 36, 2);

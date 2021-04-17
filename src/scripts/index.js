@@ -10,6 +10,8 @@ import Track from "./Track";
 import pauseMenu from "./pauseMenu";
 import Sprite from "./Sprite";
 
+import { isShowingScorePanel as showingScorePanel} from "../scorePanel/scorepanel.js";
+
 const KEY_SPACE = 32;
 const KEY_DOWNARROW = 40;
 const KEY_C = 67;
@@ -111,7 +113,11 @@ document.onkeydown = function (e) {
   }
 
   if(e.keyCode == KEY_SPACE) { // SPACE, gameplay input
-    scenes[currentSceneNumber].hit();
+    if(showingScorePanel() == false) {
+      scenes[currentSceneNumber].hit();
+    } else {
+      console.log("input blocked by score panel");
+    }
   }
   
   // bit brutal last minute fix, but other preventDefault location wasn't picking up,

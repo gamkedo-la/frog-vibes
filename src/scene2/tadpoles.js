@@ -82,16 +82,16 @@ track.Events.on("Hit", e => {
     totalhits += 1;
     // everyone gets a HuGE speed boost!
     for (let n=0; n<everyone.length; n++) {
-        everyone[n].speed += Math.random() * 4.0;
+        everyone[n].speed += 2.5+Math.random() * 1.5;
     }    
 });
 
 // off beat - fail
 track.Events.on("Miss", e => {  
     // console.log("MISS!");
-    // everyone gets a SMALL speed boost ANYWAYS!!!! LOLOLOL
+    // everyone loses a bit of speed
     for (let n=0; n<everyone.length; n++) {
-        everyone[n].speed += Math.random() * 1.0;
+        everyone[n].speed *= (0.5+Math.random() * 0.2);
     }       
 });
 
