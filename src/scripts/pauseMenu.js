@@ -13,6 +13,8 @@ import {IsPaused as PauseScene6, IsUnPaused as UnPauseScene6} from "../scene6";
 import pauseImg from "../pauseMenu/pauseMenu.png";
 import unPauseButtonImg from "../pauseMenu/unPauseButton.png";
 import unPauseButtonImgHighlighted from "../pauseMenu/unPauseButton_highlighted.png";
+import menuButtonImg from "../pauseMenu/menuButton.png";
+import menuButtonImgHighlighted from "../pauseMenu/menuButton_highlighted.png";
 
 var canvas = document.getElementById("gameCanvas");
 var rect = canvas.getBoundingClientRect();
@@ -22,6 +24,7 @@ var isEnabled = false;
 var isPaused = false;
 
 var isMouseOnUnPauseButton = false;
+var isMouseOnMenuButton = false;
 
 var scenes = [
     {},
@@ -76,6 +79,7 @@ function unPauseGame() {
     // I remove the pause UI
     pauseSprite.Stop();
     unPauseButtonSprite.Stop();
+    menuButtonSprite.Stop();
 
     // I restart the game
     unpause();
@@ -102,7 +106,7 @@ function displayUI() {
 
     pauseSprite = new Sprite(pauseImg, 1, 1);
     unPauseButtonSprite = new Sprite(unPauseButtonImg, 1, 1); 
-
+    menuButtonSprite = new Sprite(menuButtonImg, 1, 1); 
 }
 
 function handleMousePosition(evt) {
@@ -124,12 +128,31 @@ function handleMousePosition(evt) {
             }
             
     }
-    else if (isMouseOnUnPauseButton){
-        isMouseOnUnPauseButton = false;
+    else if (mouseCanvasX > 100 && mouseCanvasX < 220 &&
+        mouseCanvasY > 90 && mouseCanvasY < 120){
+            if (!isMouseOnMenuButton) {
+                isMouseOnMenuButton = true;
 
-        // Un-Highlight the button
-        unPauseButtonSprite.addImage(unPauseButtonImg, 1, 1); 
+                // Highlight the button
+                menuButtonSprite.addImage(menuButtonImgHighlighted, 1, 1); 
+            }
+            
     }
+    else {
+        if (isMouseOnUnPauseButton){
+            isMouseOnUnPauseButton = false;
+    
+            // Un-Highlight the button
+            unPauseButtonSprite.addImage(unPauseButtonImg, 1, 1); 
+        }
+
+        if (isMouseOnMenuButton){
+            isMouseOnMenuButton = false;
+    
+            // Un-Highlight the button
+            menuButtonSprite.addImage(menuButtonImg, 1, 1); 
+        }
+    } 
 }
 
 function handleMouseClick(evt) {
@@ -139,9 +162,13 @@ function handleMouseClick(evt) {
     if (isMouseOnUnPauseButton) {
         unPauseGame();
     }
+    else if (isMouseOnMenuButton) {
+        location.reload();
+    }
 }
 
 var pauseSprite = null;
 var unPauseButtonSprite = null;
+var menuButtonSprite = null;
 
 export default {enable, disable, init};
