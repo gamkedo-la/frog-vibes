@@ -16,6 +16,18 @@ import unPauseButtonImgHighlighted from "../pauseMenu/unPauseButton_highlighted.
 import menuButtonImg from "../pauseMenu/menuButton.png";
 import menuButtonImgHighlighted from "../pauseMenu/menuButton_highlighted.png";
 
+const UNPAUSE_BUTTON_MIN_X = 100;
+const UNPAUSE_BUTTON_MAX_X = 220;
+
+const UNPAUSE_BUTTON_MIN_Y = 45;
+const UNPAUSE_BUTTON_MAX_Y = 75;
+
+const MENU_BUTTON_MIN_X = 100;
+const MENU_BUTTON_MAX_X = 220;
+
+const MENU_BUTTON_MIN_Y = 90;
+const MENU_BUTTON_MAX_Y = 120;
+
 var canvas = document.getElementById("gameCanvas");
 var rect = canvas.getBoundingClientRect();
 var root = document.documentElement;
@@ -118,40 +130,26 @@ function handleMousePosition(evt) {
     var mouseCanvasX = Math.floor(mouseX * (canvas.width/canvas.clientWidth));
     var mouseCanvasY = Math.floor(mouseY * (canvas.height/canvas.clientHeight));
 
-    if (mouseCanvasX > 100 && mouseCanvasX < 220 &&
-        mouseCanvasY > 45 && mouseCanvasY < 75){
-            if (!isMouseOnUnPauseButton) {
-                isMouseOnUnPauseButton = true;
-
-                // Highlight the button
-                unPauseButtonSprite.addImage(unPauseButtonImgHighlighted, 1, 1); 
-            }
-            
+    // Check if mouse is on unpause button
+    if (checkIfMouseOnUnPauseButton(mouseCanvasX, mouseCanvasY)){
+        // The mouse is on the button - we highlight it and activate it
+        highlightAndEnableUnPauseButton();
     }
-    else if (mouseCanvasX > 100 && mouseCanvasX < 220 &&
-        mouseCanvasY > 90 && mouseCanvasY < 120){
-            if (!isMouseOnMenuButton) {
-                isMouseOnMenuButton = true;
-
-                // Highlight the button
-                menuButtonSprite.addImage(menuButtonImgHighlighted, 1, 1); 
-            }
-            
+    else if (isMouseOnUnPauseButton) {
+        // The mouse was previously on the button - un highlight it and
+        // disable it
+        unhighlightAndDisableUnPauseButton();
     }
-    else {
-        if (isMouseOnUnPauseButton){
-            isMouseOnUnPauseButton = false;
     
-            // Un-Highlight the button
-            unPauseButtonSprite.addImage(unPauseButtonImg, 1, 1); 
-        }
-
-        if (isMouseOnMenuButton){
-            isMouseOnMenuButton = false;
-    
-            // Un-Highlight the button
-            menuButtonSprite.addImage(menuButtonImg, 1, 1); 
-        }
+    // Check if mouse is on menu button
+    if (checkIfMouseOnMenuButton(mouseCanvasX, mouseCanvasY)){
+        // The mouse is on the button - we highlight it and activate it
+        highlightAndEnableMenuButton()
+    }
+    else if (isMouseOnMenuButton){
+        // The mouse was previously on the button - un highlight it and
+        // disable it
+        unhighlightAndDisableMenuButton();
     } 
 }
 
@@ -164,7 +162,54 @@ function handleMouseClick(evt) {
     }
     else if (isMouseOnMenuButton) {
         location.reload();
+        disable();
     }
+}
+
+function checkIfMouseOnUnPauseButton(mouseCanvasX, mouseCanvasY) {
+    return mouseCanvasX > UNPAUSE_BUTTON_MIN_X && 
+            mouseCanvasX < UNPAUSE_BUTTON_MAX_X &&
+            mouseCanvasY > UNPAUSE_BUTTON_MIN_Y && 
+            mouseCanvasY < UNPAUSE_BUTTON_MAX_Y ;
+}
+
+function checkIfMouseOnMenuButton(mouseCanvasX, mouseCanvasY) {
+    return mouseCanvasX > MENU_BUTTON_MIN_X && 
+            mouseCanvasX < MENU_BUTTON_MAX_X &&
+            mouseCanvasY > MENU_BUTTON_MIN_Y && 
+            mouseCanvasY < MENU_BUTTON_MAX_Y ;
+}
+
+function highlightAndEnableUnPauseButton() {
+    if (!isMouseOnUnPauseButton) {
+        isMouseOnUnPauseButton = true;
+
+        // Highlight the button
+        unPauseButtonSprite.addImage(unPauseButtonImgHighlighted, 1, 1); 
+    }
+}
+
+function unhighlightAndDisableUnPauseButton() {
+    isMouseOnUnPauseButton = false;
+
+    // Un-Highlight the button
+    unPauseButtonSprite.addImage(unPauseButtonImg, 1, 1);
+}
+
+function highlightAndEnableMenuButton() {
+    if (!isMouseOnMenuButton) {
+        isMouseOnMenuButton = true;
+
+        // Highlight the button
+        menuButtonSprite.addImage(menuButtonImgHighlighted, 1, 1); 
+    }
+}
+
+function unhighlightAndDisableMenuButton() {
+    isMouseOnMenuButton = false;
+    
+    // Un-Highlight the button
+    menuButtonSprite.addImage(menuButtonImg, 1, 1); 
 }
 
 var pauseSprite = null;
