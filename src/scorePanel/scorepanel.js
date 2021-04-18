@@ -11,7 +11,7 @@ import testimg2 from "../scene1/img/scene1sheeeeeet2.png";
 let showingPanel = false;
 export const isShowingScorePanel = () => {
   return showingPanel;
-}
+};
 
 const startScorePanel = () => {
   showingPanel = true;

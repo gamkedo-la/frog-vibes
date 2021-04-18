@@ -60,13 +60,13 @@ function disable () {
 
 function init() {
     document.addEventListener("keydown", 
-        function(evt) { handlePauseButton(evt) }, false);
+        function(evt) { handlePauseButton(evt); }, false);
 
     document.addEventListener("mousedown",
-        function(evt) { handleMouseClick(evt) }, false);
+        function(evt) { handleMouseClick(evt); }, false);
 
     canvas.addEventListener("mousemove", 
-        function(evt) { handleMousePosition(evt) }, false);
+        function(evt) { handleMousePosition(evt); }, false);
 }
 
 // I want to be able to press a button and pause the game.
@@ -144,7 +144,7 @@ function handleMousePosition(evt) {
     // Check if mouse is on menu button
     if (checkIfMouseOnMenuButton(mouseCanvasX, mouseCanvasY)){
         // The mouse is on the button - we highlight it and activate it
-        highlightAndEnableMenuButton()
+        highlightAndEnableMenuButton();
     }
     else if (isMouseOnMenuButton){
         // The mouse was previously on the button - un highlight it and

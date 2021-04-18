@@ -28,7 +28,7 @@ export const Stop = () => {
   console.log("undo tadpole!");
   everyone = [];
   track.Stop();
-}
+};
 
 export const Start = () => { 
 

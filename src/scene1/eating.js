@@ -153,7 +153,7 @@ export const Stop = () => {
   // NOTE: not used! instead just doing a location.reload() from mouseup in scorepanel
 
   console.log("undo frog!");
-}
+};
 
 // LESGOOOO
 export const Start = () => {
